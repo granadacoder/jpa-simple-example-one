@@ -6,9 +6,9 @@ import java.util.Optional;
 
 public interface IDepartmentManager {
 
-    Iterable<Department> GetAll();
+    Iterable<Department> getAll();
 
-    Optional<Department> GetSingle(long key);
+    Optional<Department> getSingle(long key);
 
     Department save(Department item);
 }

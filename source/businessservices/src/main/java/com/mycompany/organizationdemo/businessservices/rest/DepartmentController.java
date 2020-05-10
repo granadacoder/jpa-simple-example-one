@@ -47,7 +47,7 @@ public class DepartmentController {
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
     Collection<Department> getAllDepartments() {
 
-        Iterable<Department> depts = this.deptManager.GetAll();
+        Iterable<Department> depts = this.deptManager.getAll();
 
         Collection<Department> returnItems = StreamSupport.stream(depts.spliterator(), false)
                 .collect(Collectors.toList());
@@ -58,11 +58,11 @@ public class DepartmentController {
     @RequestMapping(method = RequestMethod.GET, value = "departments/{deptKey}")
     ResponseEntity<Department> getDepartmentById(@PathVariable Long deptKey) {
 
-        Optional<Department> foundItem = this.deptManager.GetSingle(deptKey);
+        Optional<Department> foundItem = this.deptManager.getSingle(deptKey);
         ResponseEntity<Department> responseEntity = new ResponseEntity<Department>(HttpStatus.NOT_FOUND);
 
         if (foundItem.isPresent()) {
-            responseEntity = new ResponseEntity<Department>(foundItem.get(), HttpStatus.OK);
+            responseEntity = new ResponseEntity<>(foundItem.get(), HttpStatus.OK);
         }
 
         return responseEntity;

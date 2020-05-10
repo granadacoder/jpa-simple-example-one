@@ -23,7 +23,7 @@ import java.util.Collection;
 public class DepartmentDomainData extends SimpleJpaRepository<Department, Long> implements IDepartmentDomainData {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    protected /*final*/ EntityManager entityManager;
 
     public DepartmentDomainData(EntityManager em) {
         super(Department.class, em);

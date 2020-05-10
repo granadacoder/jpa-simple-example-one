@@ -48,7 +48,7 @@ public class SeedData { //implements ApplicationRunner {
         }
 
         Department deptOne = new Department() {{setDepartmentName("DepartmentOne"); }};
-        this.deptManager.save(deptOne);
+        //this.deptManager.save(deptOne);
         ////this.deptManager.save(new Department() {{setDepartmentName("DepartmentTwo"); }});
     }
 }

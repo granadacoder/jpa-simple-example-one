@@ -34,13 +34,13 @@ public class DepartmentManager implements IDepartmentManager {
     }
 
     @Override
-    public Iterable<Department> GetAll() {
+    public Iterable<Department> getAll() {
         Iterable<Department> returnItems = this.deptDomainData.findAll();
         return returnItems;
     }
 
     @Override
-    public Optional<Department> GetSingle(long key) {
+    public Optional<Department> getSingle(long key) {
         Optional<Department> returnItem = this.deptDomainData.findById(key);
         return  returnItem;
     }

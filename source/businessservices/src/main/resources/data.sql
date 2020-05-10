@@ -1,4 +1,3 @@
-INSERT INTO DepartmentTable (DepartmentName) VALUES ('India');
-INSERT INTO DepartmentTable (DepartmentName) VALUES ('Brazil');
-INSERT INTO DepartmentTable (DepartmentName) VALUES ('USA');
-INSERT INTO DepartmentTable (DepartmentName) VALUES ('Italy');
+INSERT INTO DepartmentTable (DepartmentKey, DepartmentName) VALUES (111, 'DepartmentOne');
+INSERT INTO DepartmentTable (DepartmentKey, DepartmentName) VALUES (222, 'DepartmentTwo');
+INSERT INTO DepartmentTable (DepartmentKey, DepartmentName) VALUES (333, 'DepartmentThree');
