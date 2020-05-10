@@ -1,0 +1,8 @@
+rootProject.name = 'com.mycompany.organizationdemo.rootProjectName'
+include 'source:businessservices'
+include 'source:businesslayer'
+include 'source:domaindatalayer.jpa'
+include 'source:domaindatalayer.interfaces'
+include 'source:domain'
+
+

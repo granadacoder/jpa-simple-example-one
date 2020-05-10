@@ -1,0 +1,41 @@
+buildscript {
+
+    ext {
+        spring_plugin_version = '2.2.6.RELEASE'
+        springBootVersion = '2.2.6.RELEASE'
+        slf4jVersion = "1.7.25"
+        javaxInjectVersion = "1"
+        junitVersion = "4.12"
+    }
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$spring_plugin_version")
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+springBoot {
+    mainClassName = 'com.mycompany.organizationdemo.businessservices.Application'
+}
+
+group 'com.mycompany.organizationdemo'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: "$junitVersion"
+}
