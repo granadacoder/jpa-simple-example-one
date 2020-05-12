@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "DepartmentTable")
@@ -18,6 +19,9 @@ public class Department {
 
     @Column(name = "DepartmentName", unique = true)
     private String departmentName;
+
+    @Column(name = "CreateOffsetDateTime", columnDefinition = "TIMESTAMP WITH TIME ZONE" )
+    private OffsetDateTime createOffsetDateTime;
 
     public long getDepartmentKey() {
         return departmentKey;
@@ -35,4 +39,11 @@ public class Department {
         this.departmentName = departmentName;
     }
 
+    public OffsetDateTime getCreateOffsetDateTime() {
+        return createOffsetDateTime;
+    }
+
+    public void setCreateOffsetDateTime(OffsetDateTime createOffsetDateTime) {
+        this.createOffsetDateTime = createOffsetDateTime;
+    }
 }

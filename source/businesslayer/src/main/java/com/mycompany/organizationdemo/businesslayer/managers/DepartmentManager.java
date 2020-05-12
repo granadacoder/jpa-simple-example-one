@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 public class DepartmentManager implements IDepartmentManager {
@@ -14,7 +15,7 @@ public class DepartmentManager implements IDepartmentManager {
     private final Logger logger;
     private final IDepartmentDomainData deptDomainData;
 
-    /* The Inject annotation signals the constructor to use for IoC when there are multiple constructors */
+    /* The Inject annotation marks which constructor to use for IoC when there are multiple constructors */
     @Inject
     public DepartmentManager(IDepartmentDomainData deptDomainData) {
         this(LoggerFactory.getLogger(DepartmentManager.class), deptDomainData);
@@ -43,6 +44,12 @@ public class DepartmentManager implements IDepartmentManager {
     public Optional<Department> getSingle(long key) {
         Optional<Department> returnItem = this.deptDomainData.findById(key);
         return  returnItem;
+    }
+
+    public Iterable<Department> getAllBeforeCreateDate(OffsetDateTime zdt)
+    {
+        Iterable<Department> returnItems = this.deptDomainData.getByCreateBeforeDate(zdt);
+        return returnItems;
     }
 
     @Override

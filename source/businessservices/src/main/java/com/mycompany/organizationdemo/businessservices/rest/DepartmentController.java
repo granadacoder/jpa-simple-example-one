@@ -1,10 +1,10 @@
 package com.mycompany.organizationdemo.businessservices.rest;
 
 import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentManager;
-
 import com.mycompany.organizationdemo.domain.entities.Department;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
+import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,6 +49,17 @@ public class DepartmentController {
     Collection<Department> getAllDepartments() {
 
         Iterable<Department> depts = this.deptManager.getAll();
+
+        Collection<Department> returnItems = StreamSupport.stream(depts.spliterator(), false)
+                .collect(Collectors.toList());
+
+        return returnItems;
+    }
+
+    @RequestMapping(value = "/departments/beforecreatedate/{zdt}", method = RequestMethod.GET)
+    Collection<Department> getAllDepartmentsByBeforeCreateDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime zdt) {
+
+        Iterable<Department> depts = this.deptManager.getAllBeforeCreateDate(zdt);
 
         Collection<Department> returnItems = StreamSupport.stream(depts.spliterator(), false)
                 .collect(Collectors.toList());

@@ -42,3 +42,5 @@ http://localhost:8080/v1/departments
 GET
 http://localhost:8080/v1/departments/333
 
+GET
+http://localhost:8080/v1/departments/beforecreatedate/2015-10-31T01:30:00.000-05:00
