@@ -8,15 +8,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-
-
-
-
-
-
-
-
-
   datasource:
     #SPRING_DATASOURCE_URL environment variable will be something like -> jdbc:sqlserver://MySqlServer\\MyInstance:1433;DatabaseName=MyDbName;
     #NOT SECURE FOR PRODUCTION SYSTEM

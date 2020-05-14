@@ -1,4 +1,4 @@
-package com.mycompany.organizationdemo.businessservices.rest;
+package com.mycompany.organizationdemo.businessservices.restcontrollers;
 
 import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentManager;
 import com.mycompany.organizationdemo.domain.entities.Department;
@@ -59,7 +59,7 @@ public class DepartmentController {
     @RequestMapping(value = "/departments/beforecreatedate/{zdt}", method = RequestMethod.GET)
     Collection<Department> getAllDepartmentsByBeforeCreateDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime zdt) {
 
-        Iterable<Department> depts = this.deptManager.getAllBeforeCreateDate(zdt);
+        Iterable<Department> depts = this.deptManager.getDepartmentsOlderThanDate(zdt);
 
         Collection<Department> returnItems = StreamSupport.stream(depts.spliterator(), false)
                 .collect(Collectors.toList());
@@ -71,6 +71,19 @@ public class DepartmentController {
     ResponseEntity<Department> getDepartmentById(@PathVariable Long deptKey) {
 
         Optional<Department> foundItem = this.deptManager.getSingle(deptKey);
+        ResponseEntity<Department> responseEntity = new ResponseEntity<Department>(HttpStatus.NOT_FOUND);
+
+        if (foundItem.isPresent()) {
+            responseEntity = new ResponseEntity<>(foundItem.get(), HttpStatus.OK);
+        }
+
+        return responseEntity;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "departments/name/{deptName}")
+    ResponseEntity<Department> getDepartmentByName(@PathVariable String deptName) {
+
+        Optional<Department> foundItem = this.deptManager.getSingleByName(deptName);
         ResponseEntity<Department> responseEntity = new ResponseEntity<Department>(HttpStatus.NOT_FOUND);
 
         if (foundItem.isPresent()) {

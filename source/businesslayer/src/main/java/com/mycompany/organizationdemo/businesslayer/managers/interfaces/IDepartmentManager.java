@@ -3,16 +3,18 @@ package com.mycompany.organizationdemo.businesslayer.managers.interfaces;
 import com.mycompany.organizationdemo.domain.entities.Department;
 
 import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
+import java.util.Collection;
 import java.util.Optional;
 
 public interface IDepartmentManager {
 
-    Iterable<Department> getAll();
+    Collection<Department> getAll();
 
     Optional<Department> getSingle(long key);
 
-    Department save(Department item);
+    Optional<Department> getSingleByName(String deptName);
 
-    Iterable<Department> getAllBeforeCreateDate(OffsetDateTime zdt);
+    Department saveSingle(Department item);
+
+    Collection<Department> getDepartmentsOlderThanDate(OffsetDateTime zdt);
 }

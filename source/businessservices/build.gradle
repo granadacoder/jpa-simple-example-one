@@ -25,6 +25,7 @@ dependencies {
     implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion
     implementation group: 'javax.inject', name: 'javax.inject', version: "${javaxInjectVersion}"
 
+    /* #vsnote below is like a "project reference" in csproj */
     implementation project(':source:businesslayer')
     implementation project(':source:domain')
     implementation project(':source:domaindatalayer.interfaces')

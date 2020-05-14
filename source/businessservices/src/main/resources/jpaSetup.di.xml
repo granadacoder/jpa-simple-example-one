@@ -6,7 +6,8 @@
 
     <beans>
 
-        <bean id="myLocalContainerEntityManagerFactoryBeanBean"
+        <!-- the value of "id" attribute below MUST BE "entityManagerFactory"  spring-data voodoo -->
+        <bean id="entityManagerFactory"
               class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
             <property name="dataSource" ref="dataSource"/>
             <property name="packagesToScan" value="com.mycompany.organizationdemo.domain.entities"/>
@@ -25,13 +26,6 @@
             </property>
         </bean>
 
-        <!--
-                    <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-                    <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
-                    <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-        -->
-
-
         <bean id="dataSource"
               class="org.springframework.jdbc.datasource.DriverManagerDataSource">
             <property name="url" value="${SPRING_DATASOURCE_URL}"/>
@@ -40,38 +34,17 @@
             <property name="driverClassName" value="${SPRING_DATASOURCE_DRIVER-CLASS-NAME}"/>
         </bean>
 
-        <!---->
-        <!--<bean id="dataSource"-->
-        <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-        <!--<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>-->
-        <!--<property name="url" value="jdbc:sqlserver://localhost\\SQLEXPRESS2016:52931;DatabaseName=MyDatabaseNameDB;"/>-->
-        <!--<property name="username" value="jpaUser"/>-->
-        <!--<property name="password" value="MyPassword#"/>-->
-        <!--</bean>-->
-
-        <!--<bean id="dataSource"-->
-        <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-        <!--<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>-->
-        <!--<property name="url" value="jdbc:mysql://localhost:3306/spring_jpa"/>-->
-        <!--<property name="username" value="tutorialuser"/>-->
-        <!--<property name="password" value="tutorialmy5ql"/>-->
-        <!--</bean>-->
 
         <bean id="transactionManager"
               class="org.springframework.orm.jpa.JpaTransactionManager">
-            <property name="entityManagerFactory" ref="myLocalContainerEntityManagerFactoryBeanBean"/>
+            <property name="entityManagerFactory" ref="entityManagerFactory"/>
         </bean>
-
-
 
         <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
         <bean id="persistenceExceptionTranslationPostProcessor" class=
                 "org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
-
-
     </beans>
-
 
 </beans>

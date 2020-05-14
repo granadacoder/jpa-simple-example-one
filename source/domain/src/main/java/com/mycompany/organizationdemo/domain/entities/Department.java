@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.OffsetDateTime;
 
+/* #vsnote. unfortunately, there is no "Fluent Mapping"'s in Java.  It is xml based (not shown) or @Annotation based (below)  :(  */
+
 @Entity
 @Table(name = "DepartmentTable")
 public class Department {

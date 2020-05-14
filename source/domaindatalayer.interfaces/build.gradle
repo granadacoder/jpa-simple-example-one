@@ -14,8 +14,10 @@ repositories {
 
 dependencies {
 
+/* "implementation" vs "api" see https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_separation */
 
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "${springBootVersion}"
 
+    /* #vsnote below is like a "project reference" in csproj */
     implementation project(':source:domain')
 }

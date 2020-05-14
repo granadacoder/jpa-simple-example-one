@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <import resource="jpaSetup.di.xml"/>
 
-    <bean id="DepartmentDomainDataBean" class="com.mycompany.organizationdemo.domaindatalayer.jpa.DepartmentDomainData">
-        <!-- Note, no constructor arg here for EntityManager.  somehow it still gets injected -->
+    <jpa:repositories base-package="com.mycompany.organizationdemo.domaindatalayer.jpa.repositories" />
+
+    <bean id="DepartmentManagerBean" class="com.mycompany.organizationdemo.businesslayer.managers.DepartmentManager">
+        <constructor-arg ref="DepartmentJpaRepositoryViaFactoryMethodBean"/>
     </bean>
 
-    <bean id="IDepartmentManagerBean" class="com.mycompany.organizationdemo.businesslayer.managers.DepartmentManager">
-        <constructor-arg ref="DepartmentDomainDataBean"/>
+    <bean id="DepartmentJpaRepositoryServiceLocatorBean" class="com.mycompany.organizationdemo.domaindatalayer.jpa.factories.DepartmentJpaRepositoryFactory">
+        <!-- inject any dependencies required by this locator bean -->
     </bean>
 
-    <bean id="SeedDataBean" class="com.mycompany.organizationdemo.businessservices.configuration.SeedData">
-        <constructor-arg ref="IDepartmentManagerBean"/>
+    <bean id="DepartmentJpaRepositoryViaFactoryMethodBean"
+          factory-bean="DepartmentJpaRepositoryServiceLocatorBean"
+          factory-method="getInstanceDepartmentJpaRepository"/>
+
+    <bean id="SeedDataBean" class="com.mycompany.organizationdemo.businessservices.configuration.MySeedData">
+        <constructor-arg ref="DepartmentManagerBean"/>
     </bean>
 
 </beans>
