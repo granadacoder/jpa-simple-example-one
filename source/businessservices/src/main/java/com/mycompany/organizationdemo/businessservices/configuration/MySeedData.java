@@ -44,6 +44,9 @@ public class MySeedData { //implements ApplicationRunner {
         }
 
         Department deptOne = new Department() {{setDepartmentName("DepartmentNineNineNine"); }};
+
+        this.logger.warn("saveSingle not working, even thought DI looks correct ????.");
+
         ////this.deptManager.saveSingle(deptOne);
         ////this.deptManager.save(new Department() {{setDepartmentName("DepartmentTwo"); }});
     }

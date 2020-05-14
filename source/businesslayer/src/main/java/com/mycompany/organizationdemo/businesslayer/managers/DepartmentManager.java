@@ -44,18 +44,23 @@ public class DepartmentManager implements IDepartmentManager {
 
     @Override
     public Optional<Department> getSingle(long key) {
+        this.logger.info(String.format("Method getSingle called. (key=\"%1s\")", key));
         Optional<Department> returnItem = this.deptRepo.findById(key);
         return  returnItem;
     }
 
     @Override
     public Optional<Department> getSingleByName(String deptName) {
+        this.logger.info(String.format("Method getSingleByName called. (deptName=\"%1s\")", deptName));
+
         Optional<Department> returnItem = this.deptRepo.findDepartmentByDepartmentNameEquals(deptName);
         return  returnItem;
     }
 
     public Collection<Department> getDepartmentsOlderThanDate(OffsetDateTime zdt)
     {
+        this.logger.info(String.format("Method getDepartmentsOlderThanDate called. (zdt=\"%1s\")", zdt));
+
         Collection<Department> returnItems = this.deptRepo.findByCreateOffsetDateTimeBefore(zdt);
         return returnItems;
     }
