@@ -48,15 +48,20 @@ NOTE:
 
 H2 vs MsSqlServer Manual Changes.
     
-There is still one non-environment variable driven option in application.ym.
+There is still one non-environment variable driven option in application.yml.
 
     properties:
       hibernate:
         dialect:    
 
-You have to comment/uncomment out for H2 vs MsSqlServer
+For the above breadcrumb : you have to comment/uncomment out for H2 vs MsSqlServer
 
-There is also a JPA Annotation discrepancy in Department.java.  Find "private OffsetDateTime createOffsetDateTime;" and comments above it.
+
+There is also a JPA Annotation discrepancy in Department.java.  Find
+    
+    private OffsetDateTime createOffsetDateTime;
+    
+and comments above it.  You'll need to change the column-type for the 2 different databases.
     
 ...............
 
