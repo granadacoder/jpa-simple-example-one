@@ -16,8 +16,6 @@ import javax.inject.Inject;
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/v1")

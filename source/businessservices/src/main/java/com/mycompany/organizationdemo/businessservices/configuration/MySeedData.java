@@ -43,7 +43,9 @@ public class MySeedData { //implements ApplicationRunner {
             throw new IllegalArgumentException("IDepartmentManager is null in 'run'");
         }
 
-        Department deptOne = new Department() {{setDepartmentName("DepartmentNineNineNine"); }};
+        Department deptOne = new Department() {{
+            setDepartmentName("DepartmentNineNineNine");
+        }};
 
         this.logger.warn("saveSingle not working, even thought DI looks correct ????.");
 
