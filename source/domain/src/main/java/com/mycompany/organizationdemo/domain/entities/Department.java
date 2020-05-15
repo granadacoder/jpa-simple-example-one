@@ -22,7 +22,10 @@ public class Department {
     @Column(name = "DepartmentName", unique = true)
     private String departmentName;
 
+    /* H2 */
     @Column(name = "CreateOffsetDateTime", columnDefinition = "TIMESTAMP WITH TIME ZONE" )
+    /* Sql Server */
+    ////@Column(name = "CreateOffsetDateTime", columnDefinition = "DATETIMEOFFSET(7)" )
     private OffsetDateTime createOffsetDateTime;
 
     public long getDepartmentKey() {

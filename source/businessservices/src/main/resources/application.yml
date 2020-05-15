@@ -1,18 +1,28 @@
 spring:
+  batch:
+    # see https://docs.spring.io/spring-boot/docs/2.1.x/reference/html/howto-database-initialization.html for the many options of db initialization
+    initialize-schema: always
   jpa:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
       naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
     properties:
       hibernate:
+        #comingSoon create environment variable for this option
         dialect: org.hibernate.dialect.H2Dialect
+        #dialect: org.hibernate.dialect.SQLServerDialect
     open-in-view: true
   datasource:
-    #SPRING_DATASOURCE_URL environment variable will be something like -> jdbc:sqlserver://MySqlServer\\MyInstance:1433;DatabaseName=MyDbName;
-    #NOT SECURE FOR PRODUCTION SYSTEM
-    #For Local Development, Comment out the url, username, password, driverClassName and it will use File System Database, good for quick development
+    # below is needed for data.sql seed-data for ms-sql-server
+    initialization-mode: always
+
+    #SPRING_DATASOURCE_URL environment variable will be something like
+    #-> jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;LOCK_MODE=0
+    # OR
+    #-> jdbc:sqlserver://localhost:1433;instanceName=SQLEXPRESSMyInstanceName;DatabaseName=MyDB;
+
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
