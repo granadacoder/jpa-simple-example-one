@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <beans>
+
+        <!-- the value of "id" attribute below MUST BE "entityManagerFactory"  spring-data voodoo -->
+        <bean id="entityManagerFactory"
+              class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+            <property name="dataSource" ref="dataSource"/>
+            <property name="packagesToScan" value="com.mycompany.organizationdemo.domain.entities"/>
+            <property name="jpaVendorAdapter">
+                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                    <property name="showSql" value="${spring.jpa.show-sql}"/>
+                    <property name="generateDdl" value="${spring.jpa.generate-ddl}"/>
+                </bean>
+            </property>
+            <!-- See https://stackoverflow.com/questions/16088112/how-to-auto-detect-entities-in-jpa-2-0/16088340#16088340 -->
+            <property name="jpaProperties">
+                <props>
+                    <prop key="hibernate.hbm2ddl.auto">${spring.jpa.hibernate.ddl-auto}</prop>
+                    <prop key="hibernate.dialect">${spring.jpa.properties.hibernate.dialect}</prop>
+                </props>
+            </property>
+        </bean>
+
+        <bean id="dataSource"
+              class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property name="url" value="${SPRING_DATASOURCE_URL}"/>
+            <property name="username" value="${SPRING_DATASOURCE_USERNAME}"/>
+            <property name="password" value="${SPRING_DATASOURCE_PASSWORD}"/>
+            <property name="driverClassName" value="${SPRING_DATASOURCE_DRIVER-CLASS-NAME}"/>
+        </bean>
+
+
+        <bean id="transactionManager"
+              class="org.springframework.orm.jpa.JpaTransactionManager">
+            <property name="entityManagerFactory" ref="entityManagerFactory"/>
+        </bean>
+
+        <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+        <bean id="persistenceExceptionTranslationPostProcessor" class=
+                "org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+    </beans>
+
+</beans>

@@ -1,0 +1,55 @@
+buildscript {
+
+    ext {
+        spring_plugin_version = '2.2.6.RELEASE'
+        springBootVersion = '2.2.6.RELEASE'
+        slf4jVersion = "1.7.25"
+        javaxInjectVersion = "1"
+        junitVersion = "4.12"
+        mockitoVersion = "3.3.0"
+    }
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$spring_plugin_version")
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+springBoot {
+    mainClassName = 'com.mycompany.organizationdemo.businessservices.MyRestServiceStartupApplication'
+}
+
+group 'com.mycompany.organizationdemo'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: "$junitVersion"
+    testCompile group: 'org.mockito', name: 'mockito-core', version: "${mockitoVersion}"
+}
+
+
+/*
+#vsnote  this file contains several things.
+the xyzVersion values allow a single place to define dependency versions.
+
+the "dependencies" here will apply to EVERY sub-module.  so you only really want a very common list here.
+(definitely NOT a superset of dependencies.)
+
+(even something like SLF4J would not be a part of the POJO (POCO) "Domain" library.
+
+*/

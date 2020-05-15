@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group 'com.mycompany.organizationdemo'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    /* "implementation" vs "api" see https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_separation */
+
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: "$slf4jVersion"
+    implementation group: 'javax.inject', name: 'javax.inject', version: "${javaxInjectVersion}"
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "${springBootVersion}"
+
+    /* #vsnote below is like a "project reference" in csproj */
+    implementation project(':source:domain')
+    implementation project(':source:domaindatalayer.interfaces')
+    implementation project(':source:domaindatalayer.jpa')
+}
