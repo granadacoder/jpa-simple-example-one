@@ -89,6 +89,9 @@ POSTMAN Requests
 
     GET
     http://localhost:8080/v1/departments/bykeys/111,333
+    
+    DELETE
+    http://localhost:8080/v1/departments/222
 
 and NotFound negative requests
 

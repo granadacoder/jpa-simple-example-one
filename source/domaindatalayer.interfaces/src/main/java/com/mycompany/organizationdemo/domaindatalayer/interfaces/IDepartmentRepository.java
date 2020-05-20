@@ -21,4 +21,6 @@ public interface IDepartmentRepository {
     Collection<Department> findDepartmentByDepartmentKeyIn(Set<Long> departmentKeys);
 
     Department save(Department item);
+
+    int deleteDepartmentByDepartmentKey(long departmentKey);
 }

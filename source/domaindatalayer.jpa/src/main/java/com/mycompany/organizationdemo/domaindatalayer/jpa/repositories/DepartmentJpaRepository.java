@@ -4,9 +4,11 @@ import com.mycompany.organizationdemo.domain.entities.Department;
 import com.mycompany.organizationdemo.domaindatalayer.interfaces.IDepartmentRepository;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -33,4 +35,8 @@ public interface DepartmentJpaRepository extends JpaRepository<Department, Long>
     @EntityGraph(attributePaths = {"employees"})
     Collection<Department> findDepartmentByDepartmentKeyIn(Set<Long> departmentKeys);
 
+    @Modifying
+    @Transactional
+        ////@Query("DELETE FROM Department d WHERE d.departmentKey.id = ?1") /* won't handle the children */
+    int deleteDepartmentByDepartmentKey(long departmentKey); /* suffers from N+1 problem */
 }
