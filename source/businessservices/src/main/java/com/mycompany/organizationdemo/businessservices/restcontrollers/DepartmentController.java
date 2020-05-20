@@ -1,6 +1,7 @@
 package com.mycompany.organizationdemo.businessservices.restcontrollers;
 
 import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentManager;
+import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 import com.mycompany.organizationdemo.domain.entities.Department;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import javax.inject.Inject;
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/v1")
@@ -44,25 +46,33 @@ public class DepartmentController {
     }
 
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
-    Collection<Department> getAllDepartments() {
-        Collection<Department> returnItems = this.deptManager.getAll();
+    Collection<DepartmentDto> getAllDepartments() {
+        Collection<DepartmentDto> returnItems = this.deptManager.getAll();
         return returnItems;
     }
 
     @RequestMapping(value = "/departments/beforecreatedate/{zdt}", method = RequestMethod.GET)
-    Collection<Department> getAllDepartmentsByBeforeCreateDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime zdt) {
+    Collection<DepartmentDto> getAllDepartmentsByBeforeCreateDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime zdt) {
         this.logger.info(String.format("Method getAllDepartmentsByBeforeCreateDate called. (zdt=\"%1s\")", zdt));
-        Collection<Department> returnItems = this.deptManager.getDepartmentsOlderThanDate(zdt);
+        Collection<DepartmentDto> returnItems = this.deptManager.getDepartmentsOlderThanDate(zdt);
+        return returnItems;
+    }
+
+    @RequestMapping(value = "/departments/bykeys/{deptKeys}", method = RequestMethod.GET)
+    Collection<DepartmentDto> getDepartmentByKeys(@PathVariable Set<Long> deptKeys) {
+
+        this.logger.info(String.format("Method getDepartmentByKeys called. (deptKey=\"%1s\")", deptKeys));
+        Collection<DepartmentDto> returnItems = this.deptManager.getByKeys(deptKeys);
         return returnItems;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "departments/{deptKey}")
-    ResponseEntity<Department> getDepartmentById(@PathVariable Long deptKey) {
+    ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable Long deptKey) {
 
         this.logger.info(String.format("Method getDepartmentById called. (deptKey=\"%1s\")", deptKey));
 
-        Optional<Department> foundItem = this.deptManager.getSingle(deptKey);
-        ResponseEntity<Department> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Optional<DepartmentDto> foundItem = this.deptManager.getSingle(deptKey);
+        ResponseEntity<DepartmentDto> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         if (foundItem.isPresent()) {
             responseEntity = new ResponseEntity<>(foundItem.get(), HttpStatus.OK);
@@ -72,12 +82,12 @@ public class DepartmentController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "departments/name/{deptName}")
-    ResponseEntity<Department> getDepartmentByName(@PathVariable String deptName) {
+    ResponseEntity<DepartmentDto> getDepartmentByName(@PathVariable String deptName) {
 
         this.logger.info(String.format("Method getDepartmentByName called. (deptName=\"%1s\")", deptName));
 
-        Optional<Department> foundItem = this.deptManager.getSingleByName(deptName);
-        ResponseEntity<Department> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Optional<DepartmentDto> foundItem = this.deptManager.getSingleByName(deptName);
+        ResponseEntity<DepartmentDto> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         if (foundItem.isPresent()) {
             responseEntity = new ResponseEntity<>(foundItem.get(), HttpStatus.OK);

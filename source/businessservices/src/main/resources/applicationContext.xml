@@ -8,7 +8,18 @@
 
     <jpa:repositories base-package="com.mycompany.organizationdemo.domaindatalayer.jpa.repositories"/>
 
+    <bean id="ModelMapperBean" class="org.modelmapper.ModelMapper">
+    </bean>
+
+    <bean id="DepartmentEntityDtoConverterBean" class="com.mycompany.organizationdemo.businesslayer.managers.converters.DepartmentEntityDtoConverter">
+        <constructor-arg ref="ModelMapperBean"/>
+    </bean>
+
+
     <bean id="DepartmentManagerBean" class="com.mycompany.organizationdemo.businesslayer.managers.DepartmentManager">
+
+        <constructor-arg ref="DepartmentEntityDtoConverterBean"/>
+
         <!-- note, the below is the first.letter.lower.case of the classname "com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentJpaRepository".  spring-di voodoo -->
         <constructor-arg ref="departmentJpaRepository"/>
     </bean>
