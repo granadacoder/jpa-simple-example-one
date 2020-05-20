@@ -21,4 +21,6 @@ public interface IDepartmentManager {
     Collection<DepartmentDto> getByKeys(Set<Long> departmentKeys);
 
     Collection<DepartmentDto> getDepartmentsOlderThanDate(OffsetDateTime zdt);
+
+    int deleteByKey(long key);
 }

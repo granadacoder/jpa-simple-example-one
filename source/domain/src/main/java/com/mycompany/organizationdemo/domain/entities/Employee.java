@@ -5,6 +5,7 @@ import com.mycompany.organizationdemo.domain.constants.OrmConstants;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -43,7 +44,7 @@ public class Employee implements Serializable {
     //region Navigation
 
     ////@JsonManagedReference
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Department.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Department.class)//, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "DepartmentForeignKey")
     ////////@JsonManagedReference /* deal with cyclic references.  see https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion */
     private Department department;

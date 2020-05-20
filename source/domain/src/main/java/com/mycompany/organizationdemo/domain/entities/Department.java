@@ -40,8 +40,8 @@ public class Department implements Serializable {
     ////@JsonBackReference
     @OneToMany(
             mappedBy = "department",
-            cascade = CascadeType.ALL,
-            orphanRemoval = false,
+            cascade = CascadeType.REMOVE,
+            orphanRemoval = true,
             fetch = FetchType.LAZY /* Lazy or Eager here */
     )
     ////////@JsonBackReference /* deal with cyclic references.  see https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion */

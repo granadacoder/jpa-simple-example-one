@@ -2,11 +2,11 @@ package com.mycompany.organizationdemo.businessservices.restcontrollers;
 
 import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentManager;
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
-import com.mycompany.organizationdemo.domain.entities.Department;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,4 +95,34 @@ public class DepartmentController {
 
         return responseEntity;
     }
+
+
+    @RequestMapping(value = "departments/{deptKey}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer> deleteUser(@PathVariable("deptKey") Long deptKey) {
+        this.logger.info(String.format("Method deleteUser called. (deptKey=\"%1s\")", deptKey));
+
+        int rowCount = this.deptManager.deleteByKey(deptKey);
+        ResponseEntity<Integer> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        if (rowCount > 0) {
+            responseEntity = new ResponseEntity<>(rowCount, HttpStatus.OK);
+        }
+
+        return responseEntity;
+    }
+
+//    @RequestMapping(method = RequestMethod.DELETE, value = "/departments/{deptKey}")
+//    ResponseEntity<DepartmentDto> deleteDepartmentById(@PathVariable Long deptKey) {
+//
+//        this.logger.info(String.format("Method deleteDepartmentById called. (deptKey=\"%1s\")", deptKey));
+//
+//        Optional<DepartmentDto> foundItem = this.deptManager.deleteByKey(deptKey);
+//        ResponseEntity<DepartmentDto> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//
+//        if (foundItem.isPresent()) {
+//            responseEntity = new ResponseEntity<>(foundItem.get(), HttpStatus.OK);
+//        }
+//
+//        return responseEntity;
+//    }
 }

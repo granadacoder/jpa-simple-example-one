@@ -81,6 +81,7 @@ public class DepartmentManager implements IDepartmentManager {
         return returnItem;
     }
 
+    @Override
     public Collection<DepartmentDto> getDepartmentsOlderThanDate(OffsetDateTime zdt) {
         this.logger.info(String.format("Method getDepartmentsOlderThanDate called. (zdt=\"%1s\")", zdt));
         Collection<Department> entities = this.deptRepo.findByCreateOffsetDateTimeBefore(zdt);
@@ -88,8 +89,8 @@ public class DepartmentManager implements IDepartmentManager {
         return returnItems;
     }
 
-    public Collection<DepartmentDto> getByKeys(Set<Long> departmentKeys)
-    {
+    @Override
+    public Collection<DepartmentDto> getByKeys(Set<Long> departmentKeys) {
         this.logger.info(String.format("Method getByKeys called. (departmentKeys=\"%1s\")", departmentKeys));
         Collection<Department> entities = this.deptRepo.findDepartmentByDepartmentKeyIn(departmentKeys);
         Collection<DepartmentDto> returnItems = this.deptConverter.convertToDtos(entities);
@@ -100,5 +101,12 @@ public class DepartmentManager implements IDepartmentManager {
     public Department saveSingle(Department item) {
         Department returnItem = this.deptRepo.save(item);
         return returnItem;
+    }
+
+    @Override
+    public int deleteByKey(long key) {
+        this.logger.info(String.format("Method deleteByKey called. (deptName=\"%1s\")", key));
+        int returnValue  = this.deptRepo.deleteDepartmentByDepartmentKey(key);
+        return returnValue;
     }
 }
