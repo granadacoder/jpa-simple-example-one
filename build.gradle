@@ -5,8 +5,12 @@ buildscript {
         springBootVersion = '2.2.6.RELEASE'
         slf4jVersion = "1.7.25"
         javaxInjectVersion = "1"
+        javaxPersistenceApiVersion = "2.2"
         junitVersion = "4.12"
         mockitoVersion = "3.3.0"
+        jacksonAnnotationsVersion = "2.11.0"
+        modelMapperVersion = "2.3.7"
+        commonsLangVersion = '3.7'
     }
 
     repositories {

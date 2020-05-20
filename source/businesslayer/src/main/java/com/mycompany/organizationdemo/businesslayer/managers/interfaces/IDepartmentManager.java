@@ -1,20 +1,24 @@
 package com.mycompany.organizationdemo.businesslayer.managers.interfaces;
 
+import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 import com.mycompany.organizationdemo.domain.entities.Department;
 
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 public interface IDepartmentManager {
 
-    Collection<Department> getAll();
+    Collection<DepartmentDto> getAll();
 
-    Optional<Department> getSingle(long key);
+    Optional<DepartmentDto> getSingle(long key);
 
-    Optional<Department> getSingleByName(String deptName);
+    Optional<DepartmentDto> getSingleByName(String deptName);
 
     Department saveSingle(Department item);
 
-    Collection<Department> getDepartmentsOlderThanDate(OffsetDateTime zdt);
+    Collection<DepartmentDto> getByKeys(Set<Long> departmentKeys);
+
+    Collection<DepartmentDto> getDepartmentsOlderThanDate(OffsetDateTime zdt);
 }
