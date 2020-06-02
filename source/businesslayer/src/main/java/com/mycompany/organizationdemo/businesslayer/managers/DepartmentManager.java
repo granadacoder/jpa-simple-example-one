@@ -48,6 +48,9 @@ public class DepartmentManager implements IDepartmentManager {
     @Override
     public Collection<DepartmentDto> getAll() {
         List<Department> entities = this.deptRepo.findAll();
+
+        /* right here, desperately hoping for each Department in the "entities" to NOT have employees hydrated */
+
         Collection<DepartmentDto> returnItems = this.deptConverter.convertToDtos(entities);
         return returnItems;
     }

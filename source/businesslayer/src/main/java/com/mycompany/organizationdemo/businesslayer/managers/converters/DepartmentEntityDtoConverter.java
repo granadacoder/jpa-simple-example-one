@@ -5,6 +5,7 @@ import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 import com.mycompany.organizationdemo.domain.dtos.EmployeeDto;
 import com.mycompany.organizationdemo.domain.entities.Department;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,10 +35,22 @@ public class DepartmentEntityDtoConverter implements IDepartmentEntityDtoConvert
 
         this.logger = lgr;
         this.modelMapper = mm;
+
+        this.modelMapper.addMappings(new PropertyMap<DepartmentDto, Department>() {
+            @Override
+            protected void configure() {
+                skip(destination.getEmployees());
+            }
+        });
+
     }
 
     @Override
     public DepartmentDto convertToDto(final Department entity) {
+
+
+
+
         DepartmentDto returnItem = modelMapper.map(entity, DepartmentDto.class);
 
         if (null != returnItem && null != returnItem.getEmployees()) {
