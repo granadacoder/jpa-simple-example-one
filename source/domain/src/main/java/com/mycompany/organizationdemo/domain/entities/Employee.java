@@ -1,11 +1,9 @@
 package com.mycompany.organizationdemo.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mycompany.organizationdemo.domain.constants.OrmConstants;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,7 +45,7 @@ public class Employee implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Department.class)//, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "DepartmentForeignKey")
     ////////@JsonManagedReference /* deal with cyclic references.  see https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion */
-    private Department department;
+    private Department parentDepartment;
     //endregion
 
 
@@ -92,13 +90,15 @@ public class Employee implements Serializable {
     }
 
     //region Navigation
-    public Department getDepartment() {
-        return department;
+
+    public Department getParentDepartment() {
+        return parentDepartment;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setParentDepartment(Department parentDepartment) {
+        this.parentDepartment = parentDepartment;
     }
+
     //endregion
 
 

@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/api/v1")
 public class DepartmentController {
 
     private final Logger logger;

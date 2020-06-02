@@ -76,22 +76,22 @@ and comments above it.  You'll need to change the column-type for the 2 differen
 POSTMAN Requests
 
     GET
-    http://localhost:8080/v1/departments
+    http://localhost:8080/api/v1/departments
 
     GET
-    http://localhost:8080/v1/departments/333
+    http://localhost:8080/api/v1/departments/333
 
     GET
-    http://localhost:8080/v1/departments/beforecreatedate/2015-10-31T01:30:00.000-05:00
+    http://localhost:8080/api/v1/departments/beforecreatedate/2015-10-31T01:30:00.000-05:00
 
     GET
-    http://localhost:8080/v1/departments/name/DepartmentOne
+    http://localhost:8080/api/v1/departments/name/DepartmentOne
 
     GET
-    http://localhost:8080/v1/departments/bykeys/111,333
+    http://localhost:8080/api/v1/departments/bykeys/111,333
     
     DELETE
-    http://localhost:8080/v1/departments/222
+    http://localhost:8080/api/v1/departments/222
 
 and NotFound negative requests
 

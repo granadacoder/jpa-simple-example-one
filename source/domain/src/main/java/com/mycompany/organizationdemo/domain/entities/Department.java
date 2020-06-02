@@ -11,6 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -21,6 +24,11 @@ import java.util.Set;
 /* #vsnote. unfortunately, there is no "Fluent Mapping"'s in Java.  It is xml based (not shown) or @Annotation based (below)  :(  */
 
 @Entity
+@NamedEntityGraphs({
+@NamedEntityGraph(name = "departmentJustScalarsEntityGraphName", attributeNodes = {
+        @NamedAttributeNode("departmentKey"),
+        @NamedAttributeNode("departmentName")})
+})
 @Table(name = "DepartmentTable")
 public class Department implements Serializable {
 
@@ -39,7 +47,7 @@ public class Department implements Serializable {
 
     ////@JsonBackReference
     @OneToMany(
-            mappedBy = "department",
+            mappedBy = "parentDepartment",
             cascade = CascadeType.REMOVE,
             orphanRemoval = true,
             fetch = FetchType.LAZY /* Lazy or Eager here */
