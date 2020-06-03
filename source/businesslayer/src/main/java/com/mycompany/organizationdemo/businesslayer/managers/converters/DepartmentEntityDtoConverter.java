@@ -5,13 +5,15 @@ import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 import com.mycompany.organizationdemo.domain.dtos.EmployeeDto;
 import com.mycompany.organizationdemo.domain.entities.Department;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.util.Collection;
 import java.util.stream.Collectors;
+
+/* see the philosophy behind this .. at : https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application
+ */
 
 public class DepartmentEntityDtoConverter implements IDepartmentEntityDtoConverter {
 
@@ -47,10 +49,6 @@ public class DepartmentEntityDtoConverter implements IDepartmentEntityDtoConvert
 
     @Override
     public DepartmentDto convertToDto(final Department entity) {
-
-
-
-
         DepartmentDto returnItem = modelMapper.map(entity, DepartmentDto.class);
 
         if (null != returnItem && null != returnItem.getEmployees()) {
