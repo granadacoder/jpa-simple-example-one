@@ -1,6 +1,7 @@
 INSERT INTO DepartmentTable (DepartmentKey, DepartmentName, CreateOffsetDateTime) VALUES (111, 'DepartmentOne', '2001-01-31');
 INSERT INTO DepartmentTable (DepartmentKey, DepartmentName, CreateOffsetDateTime) VALUES (222, 'DepartmentTwo','2002-02-28');
 INSERT INTO DepartmentTable (DepartmentKey, DepartmentName, CreateOffsetDateTime) VALUES (333, 'DepartmentThree', CURRENT_TIMESTAMP);
+INSERT INTO DepartmentTable (DepartmentKey, DepartmentName, CreateOffsetDateTime) VALUES (444, 'DepartmentFourNoSeedEmps', CURRENT_TIMESTAMP);
 
 INSERT INTO EmployeeTable (EmployeeKey, DepartmentForeignKey, Ssn, LastName, FirstName, CreateOffsetDateTime) VALUES (1111, 111, '000-00-1111', 'Smith', 'John', CURRENT_TIMESTAMP);
 INSERT INTO EmployeeTable (EmployeeKey, DepartmentForeignKey, Ssn, LastName, FirstName, CreateOffsetDateTime) VALUES (1112, 111, '000-00-1112', 'Smith', 'Mary', CURRENT_TIMESTAMP);

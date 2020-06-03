@@ -20,8 +20,16 @@ public interface DepartmentJpaRepository extends JpaRepository<Department, Long>
     //@Query(value = "SELECT d FROM Department d") /* this still suffers from N+1 number of queries issue */
     //@Query(value = "SELECT d FROM Department d LEFT JOIN FETCH d.employees") /* without this  custom @Query, you will get N+1 queries.  one SELECT for all the deparments, and then for EACH department, get the employees.  this forces a single query.  spring-data-voodoo */
     //@EntityGraph(attributePaths = {"employees"})
-    @EntityGraph("departmentJustScalarsEntityGraphName")
+
+    //The below does NOT work :(
+    //@EntityGraph(value = "departmentJustScalarsEntityGraphName", type = EntityGraph.EntityGraphType.FETCH)
+
+    /* the below 'select new' ..  is called a "Projection" - https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#projections */
+    @Query("select new Department(d.departmentKey, d.departmentName, d.createOffsetDateTime) from Department d")
     List<Department> findAll();
+
+    @EntityGraph(attributePaths = {"employees"})
+    Optional<Department> findById(long key);
 
     /* #vsnote.  notice that only 4 methods are defined here, but the IDepartmentRepository has more than that.   JpaRepository is satisfying several of the "usual crud" methods */
 

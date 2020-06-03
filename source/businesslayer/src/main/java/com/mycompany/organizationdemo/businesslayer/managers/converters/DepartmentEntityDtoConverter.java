@@ -36,12 +36,12 @@ public class DepartmentEntityDtoConverter implements IDepartmentEntityDtoConvert
         this.logger = lgr;
         this.modelMapper = mm;
 
-        this.modelMapper.addMappings(new PropertyMap<DepartmentDto, Department>() {
-            @Override
-            protected void configure() {
-                skip(destination.getEmployees());
-            }
-        });
+//        this.modelMapper.addMappings(new PropertyMap<DepartmentDto, Department>() {
+//            @Override
+//            protected void configure() {
+//                skip(destination.getEmployees());
+//            }
+//        });
 
     }
 

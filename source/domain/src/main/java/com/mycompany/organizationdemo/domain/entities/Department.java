@@ -1,7 +1,5 @@
 package com.mycompany.organizationdemo.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mycompany.organizationdemo.domain.constants.OrmConstants;
 
 import javax.persistence.CascadeType;
@@ -24,11 +22,11 @@ import java.util.Set;
 /* #vsnote. unfortunately, there is no "Fluent Mapping"'s in Java.  It is xml based (not shown) or @Annotation based (below)  :(  */
 
 @Entity
-@NamedEntityGraphs({
-@NamedEntityGraph(name = "departmentJustScalarsEntityGraphName", attributeNodes = {
-        @NamedAttributeNode("departmentKey"),
-        @NamedAttributeNode("departmentName")})
-})
+//@NamedEntityGraphs({
+//        @NamedEntityGraph(name = "departmentJustScalarsEntityGraphName", attributeNodes = {
+//                @NamedAttributeNode("departmentKey"),
+//                @NamedAttributeNode("departmentName")})
+//})
 @Table(name = "DepartmentTable")
 public class Department implements Serializable {
 
@@ -36,15 +34,10 @@ public class Department implements Serializable {
     @Column(name = "DepartmentKey", unique = true)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long departmentKey;
-
     @Column(name = "DepartmentName", unique = true)
     private String departmentName;
-
     @Column(name = "CreateOffsetDateTime", columnDefinition = OrmConstants.OffsetDateTimeColumnDefinition)
     private OffsetDateTime createOffsetDateTime;
-
-    //region Navigation
-
     ////@JsonBackReference
     @OneToMany(
             mappedBy = "parentDepartment",
@@ -54,6 +47,17 @@ public class Department implements Serializable {
     )
     ////////@JsonBackReference /* deal with cyclic references.  see https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion */
     private Set<Employee> employees = new LinkedHashSet<>();
+
+    public Department() {
+    }
+
+    //region Navigation
+
+    public Department(long departmentKey, String departmentName, OffsetDateTime createOffsetDateTime) {
+        this.departmentKey = departmentKey;
+        this.departmentName = departmentName;
+        this.createOffsetDateTime = createOffsetDateTime;
+    }
     //endregion
 
     public long getDepartmentKey() {

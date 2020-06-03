@@ -10,7 +10,8 @@ spring:
       naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
     properties:
       hibernate:
-        #comingSoon create environment variable for this option
+        format_sql: true
+        #comingSoon create environment variable for this "dialect" option
         dialect: org.hibernate.dialect.H2Dialect
         #dialect: org.hibernate.dialect.SQLServerDialect
     open-in-view: true
@@ -33,3 +34,14 @@ logging:
     org:
       springframework:
         security: INFO
+        jdbc:
+          core:
+            JdbcTemplate: INFO
+            StatementCreatorUtils: INFO
+      hibernate:
+        SQL: INFO
+        type:
+          descriptor:
+            sql:
+              BasicBinder: INFO
+
