@@ -1,6 +1,6 @@
 package com.mycompany.organizationdemo.domaindatalayer.jpa.entities;
 
-import com.mycompany.organizationdemo.domain.constants.OrmConstants;
+import com.mycompany.organizationdemo.domaindatalayer.jpa.constants.OrmConstants;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

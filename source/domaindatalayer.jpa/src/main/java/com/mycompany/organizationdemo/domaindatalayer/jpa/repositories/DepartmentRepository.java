@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public class DepartmentJpaRepository implements IDepartmentRepository {
+public class DepartmentRepository implements IDepartmentRepository {
 
     private final Logger logger;
     private final IDepartmentEntityDtoConverter deptConverter;
@@ -23,11 +23,11 @@ public class DepartmentJpaRepository implements IDepartmentRepository {
 
     /* The Inject annotation marks which constructor to use for IoC when there are multiple constructors */
     @Inject
-    public DepartmentJpaRepository(IDepartmentEntityDtoConverter deptConverter, InternalDepartmentJpaRepository deptRepo) {
-        this(LoggerFactory.getLogger(DepartmentJpaRepository.class), deptConverter, deptRepo);
+    public DepartmentRepository(IDepartmentEntityDtoConverter deptConverter, InternalDepartmentJpaRepository deptRepo) {
+        this(LoggerFactory.getLogger(DepartmentRepository.class), deptConverter, deptRepo);
     }
 
-    public DepartmentJpaRepository(Logger lgr, IDepartmentEntityDtoConverter deptConverter, InternalDepartmentJpaRepository deptRepo) {
+    public DepartmentRepository(Logger lgr, IDepartmentEntityDtoConverter deptConverter, InternalDepartmentJpaRepository deptRepo) {
         if (null == lgr) {
             throw new IllegalArgumentException("Logger is null");
         }

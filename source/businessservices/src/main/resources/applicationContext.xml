@@ -17,9 +17,9 @@
     </bean>
 
     <bean id="departmentJpaRepositoryBean"
-          class="com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentJpaRepository">
+          class="com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentRepository">
         <constructor-arg ref="departmentEntityDtoConverterBean"/>
-        <!-- note, the below is the first.letter.lower.case of the classname "com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentJpaRepository".  spring-di voodoo -->
+        <!-- note, the below is the first.letter.lower.case of the classname "com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentRepository spring-di voodoo -->
         <constructor-arg ref="internalDepartmentJpaRepository"/>
     </bean>
 

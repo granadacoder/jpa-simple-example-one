@@ -1,4 +1,4 @@
-package com.mycompany.organizationdemo.domain.constants;
+package com.mycompany.organizationdemo.domaindatalayer.jpa.constants;
 
 public class OrmConstants {
 

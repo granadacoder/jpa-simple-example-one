@@ -67,7 +67,7 @@ For the above breadcrumb : you have to comment/uncomment out for H2 vs MsSqlServ
 
 
 You'll need to comment/uncomment values in this file for the DateTimeOffset syntax:
-    com.mycompany.organizationdemo.domain.constants.OrmConstants(.java)
+    com.mycompany.organizationdemo.domaindatalayer.jpa.constants.OrmConstants(.java)
     
 and comments above it.  You'll need to change the column-type for the 2 different databases.
     

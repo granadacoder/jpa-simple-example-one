@@ -1,6 +1,6 @@
 package com.mycompany.organizationdemo.domaindatalayer.jpa.entities;
 
-import com.mycompany.organizationdemo.domain.constants.OrmConstants;
+import com.mycompany.organizationdemo.domaindatalayer.jpa.constants.OrmConstants;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
