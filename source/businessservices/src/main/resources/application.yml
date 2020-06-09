@@ -7,13 +7,13 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
-      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
     properties:
       hibernate:
         format_sql: true
         #comingSoon create environment variable for this "dialect" option
         dialect: org.hibernate.dialect.H2Dialect
         #dialect: org.hibernate.dialect.SQLServerDialect
+        naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
     open-in-view: true
   datasource:
     # below is needed for data.sql seed-data for ms-sql-server

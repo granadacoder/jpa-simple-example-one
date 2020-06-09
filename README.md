@@ -92,6 +92,37 @@ POSTMAN Requests
     
     DELETE
     http://localhost:8080/api/v1/departments/222
+    
+    POST (as Json)
+    http://localhost:8080/api/v1/departments/department
+    
+                {
+                    "departmentName": "DepartmentNine",
+                    "createOffsetDateTime": "2020-06-09T08:53:55.547-04:00",
+                    "employees": [
+                        {
+                            "ssn": "000-00-9992",
+                            "lastName": "Nottingham",
+                            "firstName": "Nathanial",
+                            "createOffsetDateTime": "2020-06-09T08:53:55.559-04:00",
+                            "parentDepartmentKey": 999
+                        },
+                        {
+                            "ssn": "000-00-9993",
+                            "lastName": "Nottingham",
+                            "firstName": "Nancy",
+                            "createOffsetDateTime": "2020-06-09T08:53:55.559-04:00",
+                            "parentDepartmentKey": 999
+                        },
+                        {
+                            "ssn": "000-00-9991",
+                            "lastName": "Nottingham",
+                            "firstName": "Nina",
+                            "createOffsetDateTime": "2020-06-09T08:53:55.559-04:00",
+                            "parentDepartmentKey": 999
+                        }
+                    ]
+                }        
 
 and NotFound negative requests
 

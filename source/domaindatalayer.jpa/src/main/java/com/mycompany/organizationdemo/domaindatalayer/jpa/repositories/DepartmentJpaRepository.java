@@ -1,51 +1,106 @@
 package com.mycompany.organizationdemo.domaindatalayer.jpa.repositories;
 
-import com.mycompany.organizationdemo.domain.entities.Department;
+import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 import com.mycompany.organizationdemo.domaindatalayer.interfaces.IDepartmentRepository;
-import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import com.mycompany.organizationdemo.domaindatalayer.jpa.converters.interfaces.IDepartmentEntityDtoConverter;
+import com.mycompany.organizationdemo.domaindatalayer.jpa.entities.DepartmentJpaEntity;
+import com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.internal.InternalDepartmentJpaRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.transaction.Transactional;
+import javax.inject.Inject;
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public interface DepartmentJpaRepository extends JpaRepository<Department, Long>, IDepartmentRepository {
+public class DepartmentJpaRepository implements IDepartmentRepository {
 
-    //@Query(value = "SELECT d FROM Department d") /* this still suffers from N+1 number of queries issue */
-    //@Query(value = "SELECT d FROM Department d LEFT JOIN FETCH d.employees") /* without this  custom @Query, you will get N+1 queries.  one SELECT for all the deparments, and then for EACH department, get the employees.  this forces a single query.  spring-data-voodoo */
-    //@EntityGraph(attributePaths = {"employees"})
+    private final Logger logger;
+    private final IDepartmentEntityDtoConverter deptConverter;
+    private final InternalDepartmentJpaRepository deptRepo;
 
-    //The below does NOT work :(
-    //@EntityGraph(value = "departmentJustScalarsEntityGraphName", type = EntityGraph.EntityGraphType.FETCH)
+    /* The Inject annotation marks which constructor to use for IoC when there are multiple constructors */
+    @Inject
+    public DepartmentJpaRepository(IDepartmentEntityDtoConverter deptConverter, InternalDepartmentJpaRepository deptRepo) {
+        this(LoggerFactory.getLogger(DepartmentJpaRepository.class), deptConverter, deptRepo);
+    }
 
-    /* the below 'select new' ..  is called a "Projection" - https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#projections */
-    @Query("select new Department(d.departmentKey, d.departmentName, d.createOffsetDateTime) from Department d")
-    List<Department> findAll();
+    public DepartmentJpaRepository(Logger lgr, IDepartmentEntityDtoConverter deptConverter, InternalDepartmentJpaRepository deptRepo) {
+        if (null == lgr) {
+            throw new IllegalArgumentException("Logger is null");
+        }
 
-    @EntityGraph(attributePaths = {"employees"})
-    Optional<Department> findById(long key);
+        if (null == deptConverter) {
+            throw new IllegalArgumentException("IDepartmentEntityDtoConverter is null");
+        }
 
-    /* #vsnote.  notice that only 4 methods are defined here, but the IDepartmentRepository has more than that.   JpaRepository is satisfying several of the "usual crud" methods */
+        if (null == deptRepo) {
+            throw new IllegalArgumentException("IDepartmentDomainData is null");
+        }
 
-    //@EntityGraph(attributePaths = {"employees"})
-    @Query("SELECT d FROM Department d LEFT JOIN FETCH d.employees WHERE d.departmentName = :departmentName") /* this works because departmentName is a UNIQUE constraint...otherwise it might give back duplicate parents (Departments) */
-    Optional<Department> findDepartmentByDepartmentNameEquals(@Param("departmentName") String departmentName);
+        this.logger = lgr;
+        this.deptConverter = deptConverter;
+        this.deptRepo = deptRepo;
+    }
 
-    /* #vsnote note the below, this is "lookup strategy".  see https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods */
-    Collection<Department> findByCreateOffsetDateTimeBefore(OffsetDateTime zdt);
 
-    //@Query("SELECT d FROM Department d LEFT JOIN FETCH d.employees WHERE d.departmentKey IN ?1")  /* here a Query will bring back repeat parent (Department) rows */
-    @EntityGraph(attributePaths = {"employees"})
-    Collection<Department> findDepartmentByDepartmentKeyIn(Set<Long> departmentKeys);
+    @Override
+    public Collection<DepartmentDto> findAll() {
+        List<DepartmentJpaEntity> entities = this.deptRepo.findAll();
+        /* right here, desperately hoping for each DepartmentJpaEntity in the "entities" to NOT have employees hydrated */
+        Collection<DepartmentDto> returnItems = this.deptConverter.convertToDtos(entities);
+        return returnItems;
+    }
 
-    @Modifying
-    @Transactional
-        ////@Query("DELETE FROM Department d WHERE d.departmentKey.id = ?1") /* won't handle the children */
-    int deleteDepartmentByDepartmentKey(long departmentKey); /* suffers from N+1 problem */
+    @Override
+    public Optional<DepartmentDto> findById(long key) {
+        Optional<DepartmentDto> returnItem = Optional.empty();
+        Optional<DepartmentJpaEntity> entity = this.deptRepo.findById(key);
+        if (entity.isPresent()) {
+            returnItem = Optional.of(this.deptConverter.convertToDto(entity.get()));
+        }
+        return returnItem;
+    }
+
+    @Override
+    public Optional<DepartmentDto> findByDepartmentName(String departmentName) {
+        Optional<DepartmentDto> returnItem = Optional.empty();
+        Optional<DepartmentJpaEntity> entity = this.deptRepo.findDepartmentByDepartmentNameEquals(departmentName);
+        if (entity.isPresent()) {
+            returnItem = Optional.of(this.deptConverter.convertToDto(entity.get()));
+        }
+        return returnItem;
+    }
+
+    @Override
+    public Collection<DepartmentDto> findByCreateOffsetDateTimeBefore(OffsetDateTime zdt) {
+        Collection<DepartmentJpaEntity> entities = this.deptRepo.findByCreateOffsetDateTimeBefore(zdt);
+        /* right here, desperately hoping for each DepartmentJpaEntity in the "entities" to NOT have employees hydrated */
+        Collection<DepartmentDto> returnItems = this.deptConverter.convertToDtos(entities);
+        return returnItems;
+    }
+
+    @Override
+    public Collection<DepartmentDto> findBySurrogateKeyIn(Set<Long> departmentKeys) {
+        Collection<DepartmentJpaEntity> entities = this.deptRepo.findDepartmentByDepartmentKeyIn(departmentKeys);
+        /* right here, desperately hoping for each DepartmentJpaEntity in the "entities" to NOT have employees hydrated */
+        Collection<DepartmentDto> returnItems = this.deptConverter.convertToDtos(entities);
+        return returnItems;
+    }
+
+    @Override
+    public DepartmentDto save(DepartmentDto item) {
+        DepartmentJpaEntity entity = this.deptConverter.convertToEntity(item);
+        DepartmentJpaEntity savedEntity = this.deptRepo.save(entity);
+        DepartmentDto returnItem = this.deptConverter.convertToDto(savedEntity);
+        return returnItem;
+    }
+
+    @Override
+    public int deleteByKey(long departmentKey) {
+        int returnValue = this.deptRepo.deleteDepartmentByDepartmentKey(departmentKey);
+        return returnValue;
+    }
 }

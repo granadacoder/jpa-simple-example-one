@@ -1,4 +1,4 @@
-package com.mycompany.organizationdemo.domain.entities;
+package com.mycompany.organizationdemo.domaindatalayer.jpa.entities;
 
 import com.mycompany.organizationdemo.domain.constants.OrmConstants;
 
@@ -9,9 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
-import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -28,7 +25,7 @@ import java.util.Set;
 //                @NamedAttributeNode("departmentName")})
 //})
 @Table(name = "DepartmentTable")
-public class Department implements Serializable {
+public class DepartmentJpaEntity implements Serializable {
 
     @Id
     @Column(name = "DepartmentKey", unique = true)
@@ -40,20 +37,20 @@ public class Department implements Serializable {
     private OffsetDateTime createOffsetDateTime;
     ////@JsonBackReference
     @OneToMany(
-            mappedBy = "parentDepartment",
-            cascade = CascadeType.REMOVE,
+            mappedBy = "parentDepartmentJpaEntity",
+            cascade = CascadeType.PERSIST,
             orphanRemoval = true,
             fetch = FetchType.LAZY /* Lazy or Eager here */
     )
     ////////@JsonBackReference /* deal with cyclic references.  see https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion */
-    private Set<Employee> employees = new LinkedHashSet<>();
+    private Set<EmployeeJpaEntity> employeeJpaEntities = new LinkedHashSet<>();
 
-    public Department() {
+    public DepartmentJpaEntity() {
     }
 
     //region Navigation
 
-    public Department(long departmentKey, String departmentName, OffsetDateTime createOffsetDateTime) {
+    public DepartmentJpaEntity(long departmentKey, String departmentName, OffsetDateTime createOffsetDateTime) {
         this.departmentKey = departmentKey;
         this.departmentName = departmentName;
         this.createOffsetDateTime = createOffsetDateTime;
@@ -85,12 +82,12 @@ public class Department implements Serializable {
     }
 
     //region Navigation
-    public Set<Employee> getEmployees() {
-        return employees;
+    public Set<EmployeeJpaEntity> getEmployeeJpaEntities() {
+        return employeeJpaEntities;
     }
 
-    public void setEmployees(Set<Employee> employees) {
-        this.employees = employees;
+    public void setEmployeeJpaEntities(Set<EmployeeJpaEntity> employeeJpaEntities) {
+        this.employeeJpaEntities = employeeJpaEntities;
     }
     //endregion
 
@@ -101,7 +98,7 @@ public class Department implements Serializable {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        Department that = (Department) o;
+        DepartmentJpaEntity that = (DepartmentJpaEntity) o;
 
         return new org.apache.commons.lang3.builder.EqualsBuilder()
                 .append(departmentKey, that.departmentKey)

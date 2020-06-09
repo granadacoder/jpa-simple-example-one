@@ -1,9 +1,10 @@
-package com.mycompany.organizationdemo.domain.entities;
+package com.mycompany.organizationdemo.domaindatalayer.jpa.entities;
 
 import com.mycompany.organizationdemo.domain.constants.OrmConstants;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +21,7 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "EmployeeTable")
-public class Employee implements Serializable {
+public class EmployeeJpaEntity implements Serializable {
 
     @Id
     @Column(name = "EmployeeKey", unique = true)
@@ -42,10 +43,10 @@ public class Employee implements Serializable {
     //region Navigation
 
     ////@JsonManagedReference
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Department.class)//, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DepartmentJpaEntity.class, cascade = CascadeType.PERSIST )
     @JoinColumn(name = "DepartmentForeignKey")
     ////////@JsonManagedReference /* deal with cyclic references.  see https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion */
-    private Department parentDepartment;
+    private DepartmentJpaEntity parentDepartmentJpaEntity;
     //endregion
 
 
@@ -91,12 +92,12 @@ public class Employee implements Serializable {
 
     //region Navigation
 
-    public Department getParentDepartment() {
-        return parentDepartment;
+    public DepartmentJpaEntity getParentDepartmentJpaEntity() {
+        return parentDepartmentJpaEntity;
     }
 
-    public void setParentDepartment(Department parentDepartment) {
-        this.parentDepartment = parentDepartment;
+    public void setParentDepartmentJpaEntity(DepartmentJpaEntity parentDepartmentJpaEntity) {
+        this.parentDepartmentJpaEntity = parentDepartmentJpaEntity;
     }
 
     //endregion
@@ -108,11 +109,11 @@ public class Employee implements Serializable {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        Employee employee = (Employee) o;
+        EmployeeJpaEntity employeeJpaEntity = (EmployeeJpaEntity) o;
 
         return new EqualsBuilder()
-                .append(employeeKey, employee.employeeKey)
-                .append(ssn, employee.ssn)
+                .append(employeeKey, employeeJpaEntity.employeeKey)
+                .append(ssn, employeeJpaEntity.ssn)
                 .isEquals();
     }
 
