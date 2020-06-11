@@ -79,6 +79,9 @@ POSTMAN Requests
     http://localhost:8080/api/v1/departments
 
     GET
+    http://localhost:8080/api/v1/departments/orphans    
+
+    GET
     http://localhost:8080/api/v1/departments/333
 
     GET

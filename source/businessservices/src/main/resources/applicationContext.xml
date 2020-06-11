@@ -16,7 +16,7 @@
         <constructor-arg ref="modelMapperBean"/>
     </bean>
 
-    <bean id="departmentJpaRepositoryBean"
+    <bean id="departmentRepositoryBean"
           class="com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentRepository">
         <constructor-arg ref="departmentEntityDtoConverterBean"/>
         <!-- note, the below is the first.letter.lower.case of the classname "com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentRepository spring-di voodoo -->
@@ -25,7 +25,7 @@
 
 
     <bean id="departmentManagerBean" class="com.mycompany.organizationdemo.businesslayer.managers.DepartmentManager">
-        <constructor-arg ref="departmentJpaRepositoryBean"/>
+        <constructor-arg ref="departmentRepositoryBean"/>
     </bean>
 
     <bean id="seedDataBean" class="com.mycompany.organizationdemo.businessservices.configuration.MySeedData">

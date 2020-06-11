@@ -42,6 +42,12 @@ public class DepartmentManager implements IDepartmentManager {
   }
 
   @Override
+  public Collection<DepartmentDto> getAllNoEmployees() {
+    Collection<DepartmentDto> returnItems = this.deptRepo.findOrphanedDepartments();
+    return returnItems;
+  }
+
+  @Override
   public Optional<DepartmentDto> getSingle(long key) {
     this.logger.info(String.format("Method getSingle called. (key=\"%1s\")", key));
     Optional<DepartmentDto> returnItem = this.deptRepo.findById(key);

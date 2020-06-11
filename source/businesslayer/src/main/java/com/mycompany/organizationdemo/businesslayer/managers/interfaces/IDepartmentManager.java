@@ -11,6 +11,8 @@ public interface IDepartmentManager {
 
     Collection<DepartmentDto> getAll();
 
+    Collection<DepartmentDto> getAllNoEmployees();
+
     Optional<DepartmentDto> getSingle(long key);
 
     Optional<DepartmentDto> getSingleByName(String deptName);

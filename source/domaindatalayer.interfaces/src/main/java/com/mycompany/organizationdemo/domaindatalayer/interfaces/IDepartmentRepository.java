@@ -10,15 +10,17 @@ public interface IDepartmentRepository {
 
     Collection<DepartmentDto> findAll();
 
-    Optional<DepartmentDto> findById(long key);
+  Optional<DepartmentDto> findById(long key);
 
-    Optional<DepartmentDto> findByDepartmentName(String departmentName);
+  Optional<DepartmentDto> findByDepartmentName(String departmentName);
 
-    Collection<DepartmentDto> findByCreateOffsetDateTimeBefore(OffsetDateTime zdt);
+  Collection<DepartmentDto> findByCreateOffsetDateTimeBefore(OffsetDateTime zdt);
 
-    Collection<DepartmentDto> findBySurrogateKeyIn(Set<Long> departmentKeys);
+  Collection<DepartmentDto> findBySurrogateKeyIn(Set<Long> departmentKeys);
 
-    DepartmentDto save(DepartmentDto item);
+  DepartmentDto save(DepartmentDto item);
 
-    int deleteByKey(long departmentKey);
+  int deleteByKey(long departmentKey);
+
+  Collection<DepartmentDto> findOrphanedDepartments();
 }

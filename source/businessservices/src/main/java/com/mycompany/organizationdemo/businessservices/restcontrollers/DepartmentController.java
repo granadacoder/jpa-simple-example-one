@@ -51,6 +51,12 @@ public class DepartmentController {
     return returnItems;
   }
 
+  @RequestMapping(value = "/departments/orphans", method = RequestMethod.GET)
+  Collection<DepartmentDto> getAllOrphanedDepartments() {
+    Collection<DepartmentDto> returnItems = this.deptManager.getAllNoEmployees();
+    return returnItems;
+  }
+
   @RequestMapping(value = "/departments/beforecreatedate/{zdt}", method = RequestMethod.GET)
   Collection<DepartmentDto> getAllDepartmentsByBeforeCreateDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime zdt) {
     this.logger.info(String.format("Method getAllDepartmentsByBeforeCreateDate called. (zdt=\"%1s\")", zdt));
