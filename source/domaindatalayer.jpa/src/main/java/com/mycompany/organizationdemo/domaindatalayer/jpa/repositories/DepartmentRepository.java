@@ -64,6 +64,14 @@ public class DepartmentRepository implements IDepartmentRepository {
 
     /* keep the EM around for more advanced query needs */
     this.entityManager = em;
+
+    /* there are other ways to deal with the "beyond the simple" functionality limits of JpaRepository.
+    see https://dimitr.im/writing-dynamic-queries-with-spring-data-jpa
+    which discusses
+    https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/domain/Example.html
+     and
+    https://docs.spring.io/spring-data/jpa/docs/current/api/org/springframework/data/jpa/domain/Specification.html
+     */
   }
 
 
