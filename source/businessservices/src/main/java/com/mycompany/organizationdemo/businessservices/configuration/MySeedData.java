@@ -1,7 +1,7 @@
 package com.mycompany.organizationdemo.businessservices.configuration;
 
 import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentManager;
-import com.mycompany.organizationdemo.domain.entities.Department;
+import com.mycompany.organizationdemo.domaindatalayer.jpa.entities.DepartmentJpaEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -43,13 +43,13 @@ public class MySeedData { //implements ApplicationRunner {
             throw new IllegalArgumentException("IDepartmentManager is null in 'run'");
         }
 
-        Department deptOne = new Department() {{
+        DepartmentJpaEntity deptOne = new DepartmentJpaEntity() {{
             setDepartmentName("DepartmentNineNineNine");
         }};
 
         this.logger.warn("saveSingle not working, even thought DI looks correct ????.");
 
         ////this.deptManager.saveSingle(deptOne);
-        ////this.deptManager.save(new Department() {{setDepartmentName("DepartmentTwo"); }});
+        ////this.deptManager.save(new DepartmentJpaEntity() {{setDepartmentName("DepartmentTwo"); }});
     }
 }

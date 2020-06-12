@@ -1,26 +1,26 @@
 package com.mycompany.organizationdemo.domaindatalayer.interfaces;
 
-import com.mycompany.organizationdemo.domain.entities.Department;
-
+import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 import java.time.OffsetDateTime;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 public interface IDepartmentRepository {
 
-    List<Department> findAll();
+    Collection<DepartmentDto> findAll();
 
-    Optional<Department> findById(long key);
+  Optional<DepartmentDto> findById(long key);
 
-    Optional<Department> findDepartmentByDepartmentNameEquals(String departmentName);
+  Optional<DepartmentDto> findByDepartmentName(String departmentName);
 
-    Collection<Department> findByCreateOffsetDateTimeBefore(OffsetDateTime zdt);
+  Collection<DepartmentDto> findByCreateOffsetDateTimeBefore(OffsetDateTime zdt);
 
-    Collection<Department> findDepartmentByDepartmentKeyIn(Set<Long> departmentKeys);
+  Collection<DepartmentDto> findBySurrogateKeyIn(Set<Long> departmentKeys);
 
-    Department save(Department item);
+  DepartmentDto save(DepartmentDto item);
 
-    int deleteDepartmentByDepartmentKey(long departmentKey);
+  int deleteByKey(long departmentKey);
+
+  Collection<DepartmentDto> findOrphanedDepartments();
 }

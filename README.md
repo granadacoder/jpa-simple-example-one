@@ -67,7 +67,7 @@ For the above breadcrumb : you have to comment/uncomment out for H2 vs MsSqlServ
 
 
 You'll need to comment/uncomment values in this file for the DateTimeOffset syntax:
-    com.mycompany.organizationdemo.domain.constants.OrmConstants(.java)
+    com.mycompany.organizationdemo.domaindatalayer.jpa.constants.OrmConstants(.java)
     
 and comments above it.  You'll need to change the column-type for the 2 different databases.
     
@@ -77,6 +77,9 @@ POSTMAN Requests
 
     GET
     http://localhost:8080/api/v1/departments
+
+    GET
+    http://localhost:8080/api/v1/departments/orphans    
 
     GET
     http://localhost:8080/api/v1/departments/333
@@ -92,6 +95,37 @@ POSTMAN Requests
     
     DELETE
     http://localhost:8080/api/v1/departments/222
+    
+    POST (as Json)
+    http://localhost:8080/api/v1/departments/department
+    
+                {
+                    "departmentName": "DepartmentNine",
+                    "createOffsetDateTime": "2020-06-09T08:53:55.547-04:00",
+                    "employees": [
+                        {
+                            "ssn": "000-00-9992",
+                            "lastName": "Nottingham",
+                            "firstName": "Nathanial",
+                            "createOffsetDateTime": "2020-06-09T08:53:55.559-04:00",
+                            "parentDepartmentKey": 999
+                        },
+                        {
+                            "ssn": "000-00-9993",
+                            "lastName": "Nottingham",
+                            "firstName": "Nancy",
+                            "createOffsetDateTime": "2020-06-09T08:53:55.559-04:00",
+                            "parentDepartmentKey": 999
+                        },
+                        {
+                            "ssn": "000-00-9991",
+                            "lastName": "Nottingham",
+                            "firstName": "Nina",
+                            "createOffsetDateTime": "2020-06-09T08:53:55.559-04:00",
+                            "parentDepartmentKey": 999
+                        }
+                    ]
+                }        
 
 and NotFound negative requests
 

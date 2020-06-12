@@ -1,7 +1,6 @@
 package com.mycompany.organizationdemo.businesslayer.managers.interfaces;
 
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
-import com.mycompany.organizationdemo.domain.entities.Department;
 
 import java.time.OffsetDateTime;
 import java.util.Collection;
@@ -12,11 +11,13 @@ public interface IDepartmentManager {
 
     Collection<DepartmentDto> getAll();
 
+    Collection<DepartmentDto> getAllNoEmployees();
+
     Optional<DepartmentDto> getSingle(long key);
 
     Optional<DepartmentDto> getSingleByName(String deptName);
 
-    Department saveSingle(Department item);
+    DepartmentDto saveSingle(DepartmentDto item);
 
     Collection<DepartmentDto> getByKeys(Set<Long> departmentKeys);
 
