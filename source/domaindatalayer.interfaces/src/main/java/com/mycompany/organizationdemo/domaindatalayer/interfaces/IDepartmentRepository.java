@@ -8,7 +8,9 @@ import java.util.Set;
 
 public interface IDepartmentRepository {
 
-    Collection<DepartmentDto> findAll();
+  Collection<DepartmentDto> findEmAll();
+
+  Collection<DepartmentDto> findEmAllByMyCoolProjectionExample();
 
   Optional<DepartmentDto> findById(long key);
 

@@ -7,8 +7,10 @@ import com.mycompany.organizationdemo.domaindatalayer.jpa.entities.DepartmentJpa
 import com.mycompany.organizationdemo.domaindatalayer.jpa.entities.DepartmentJpaEntity_;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.entities.EmployeeJpaEntity;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.entities.EmployeeJpaEntity_;
+import com.mycompany.organizationdemo.domaindatalayer.jpa.projections.DepartmentLiteProjection;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.internal.InternalDepartmentJpaRepository;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +25,8 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 public class DepartmentRepository implements IDepartmentRepository {
 
@@ -76,10 +80,32 @@ public class DepartmentRepository implements IDepartmentRepository {
 
 
   @Override
-  public Collection<DepartmentDto> findAll() {
+  public Collection<DepartmentDto> findEmAll() {
     List<DepartmentJpaEntity> entities = this.internalDepartmentJpaRepository.findAll();
     /* right here, desperately hoping for each DepartmentJpaEntity in the "entities" to NOT have employees hydrated */
     Collection<DepartmentDto> returnItems = this.deptConverter.convertToDtos(entities);
+    return returnItems;
+  }
+
+  @Override
+  public Collection<DepartmentDto> findEmAllByMyCoolProjectionExample() {
+    Pageable topTen = PageRequest.of(0, 25);
+    List<DepartmentLiteProjection> projections = this.internalDepartmentJpaRepository.findAllProjectedBy(/*DepartmentLiteProjection.class, */topTen);
+
+    /* change to use IDepartmentEntityDtoConverter , but hand map for now */
+    Collection<DepartmentDto> returnItems = new ArrayList<>();
+    if (null != projections) {
+      for (DepartmentLiteProjection parentProjection : projections) {
+        DepartmentDto dto = new DepartmentDto();
+        dto.setDepartmentKey(parentProjection.getDepartmentKey());
+        if (null != parentProjection.getDepartmentName()) {
+          dto.setDepartmentName(parentProjection.getDepartmentName());
+        }
+
+        returnItems.add(dto);
+      }
+    }
+
     return returnItems;
   }
 
@@ -135,6 +161,21 @@ public class DepartmentRepository implements IDepartmentRepository {
 
   @Override
   public Collection<DepartmentDto> findOrphanedDepartments() {
+
+    /*
+    * Wow.  SpringJPA for "WHERE NOT EXISTS"
+    *
+    * C#/EFCore pseudo example equivalent.  #noMetaModels
+
+          //find (and only hydrate) Customer(s) that have OrderDetails where the Product.Name is NOT CareBears
+         IEnumerable<Customer> justCustomersHydrated = ormContext.Customers
+            .Where(cust => cust.Orders
+            .SelectMany(ord => ord.OrderDetails)
+					  .Select(det => det.Product.Where(det => det.Product.Name != "CareBears")
+					  .Any());
+    * */
+
+
     CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
 
     //main query

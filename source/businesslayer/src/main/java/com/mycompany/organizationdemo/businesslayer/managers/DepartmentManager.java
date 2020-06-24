@@ -37,7 +37,8 @@ public class DepartmentManager implements IDepartmentManager {
 
   @Override
   public Collection<DepartmentDto> getAll() {
-    Collection<DepartmentDto> returnItems = this.deptRepo.findAll();
+    /* use .findEmAll() or .findEmAllByMyCoolProjectionExample() here */
+    Collection<DepartmentDto> returnItems = this.deptRepo.findEmAllByMyCoolProjectionExample();
     return returnItems;
   }
 

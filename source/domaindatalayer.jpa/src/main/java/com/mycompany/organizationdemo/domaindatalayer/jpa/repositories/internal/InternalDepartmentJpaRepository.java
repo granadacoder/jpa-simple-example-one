@@ -1,18 +1,21 @@
 package com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.internal;
 
 import com.mycompany.organizationdemo.domaindatalayer.jpa.entities.DepartmentJpaEntity;
+import com.mycompany.organizationdemo.domaindatalayer.jpa.projections.DepartmentLiteProjection;
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.transaction.Transactional;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+/* java does not have "internal class, internal interface" like C#  :(  */
 public interface InternalDepartmentJpaRepository extends JpaRepository<DepartmentJpaEntity, Long> {
 
   //@Query(value = "SELECT d FROM DepartmentJpaEntity d") /* this still suffers from N+1 number of queries issue */
@@ -22,12 +25,17 @@ public interface InternalDepartmentJpaRepository extends JpaRepository<Departmen
   //The below does NOT work :(
   //@EntityGraph(value = "departmentJustScalarsEntityGraphName", type = EntityGraph.EntityGraphType.FETCH)
 
-  /* the below 'select new' ..  is called a "Projection" - https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#projections */
-  @Query("select new DepartmentJpaEntity(d.departmentKey, d.departmentName, d.createOffsetDateTime) from DepartmentJpaEntity d")
+  /* the below is projection by 'select new' .. reusing the primary object with overloaded constructor - https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#projections */
+  @Query("select new DepartmentJpaEntity(d.departmentKey, d.departmentName) from DepartmentJpaEntity d")
   List<DepartmentJpaEntity> findAll();
+
+  /* projection by interface */
+  List<DepartmentLiteProjection> findAllProjectedBy(Pageable pageable);
+
 
   @EntityGraph(attributePaths = {"employeeJpaEntities"})
   Optional<DepartmentJpaEntity> findById(Long key);
+
 
   /* #vsnote.  notice that only 4 methods are defined here, but the IDepartmentRepository has more than that.   JpaRepository is satisfying several of the "usual crud" methods */
 
@@ -51,4 +59,7 @@ public interface InternalDepartmentJpaRepository extends JpaRepository<Departmen
   @Override
   @org.springframework.transaction.annotation.Transactional
   DepartmentJpaEntity save(DepartmentJpaEntity entity);
+
+  @Override
+  <S extends DepartmentJpaEntity> List<S> saveAll(Iterable<S> entities);
 }
