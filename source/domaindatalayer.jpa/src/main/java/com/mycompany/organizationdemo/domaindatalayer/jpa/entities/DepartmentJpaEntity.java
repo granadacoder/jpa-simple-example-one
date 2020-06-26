@@ -50,10 +50,9 @@ public class DepartmentJpaEntity implements Serializable {
 
     //region Navigation
 
-    public DepartmentJpaEntity(long departmentKey, String departmentName, OffsetDateTime createOffsetDateTime) {
+    public DepartmentJpaEntity(long departmentKey, String departmentName) {
         this.departmentKey = departmentKey;
         this.departmentName = departmentName;
-        this.createOffsetDateTime = createOffsetDateTime;
     }
     //endregion
 
