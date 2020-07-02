@@ -5,6 +5,7 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <import resource="jpaSetup.di.xml"/>
+    <import resource="security.di.xml"/>
 
     <jpa:repositories base-package="com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.internal"/>
 
@@ -30,6 +31,10 @@
 
     <bean id="seedDataBean" class="com.mycompany.organizationdemo.businessservices.configuration.MySeedData">
         <constructor-arg ref="departmentManagerBean"/>
+    </bean>
+
+
+    <bean id="faqManagerBean" class="com.mycompany.organizationdemo.businesslayer.managers.FaqManager">
     </bean>
 
 </beans>
