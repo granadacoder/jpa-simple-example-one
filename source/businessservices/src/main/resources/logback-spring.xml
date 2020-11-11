@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <springProfile name="default">
+        <property name="LOG_HOME" value="${user.home}/logbackLocalDrop"/>
+    </springProfile>
+
+    <!-- "!local & !dev & !prod" -->
+    <springProfile name="!default">
+        <!-- Try it without a volume mount -->
+        <property name="LOG_HOME" value="./logs/"/>
+    </springProfile>
+
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                %X{MDC_TRANSACTION_ID} %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="FILE-APPENDER-ONE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/granadacoderjpasample.businessserviceslayer.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %X{MDC_TRANSACTION_ID} %d{yyyy-MM-dd HH:mm:ss} - %msg%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG_HOME}/archived/granadacoderjpasample.businessserviceslayer.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- Temporary Small Size Below to Prove Rollover is working -->
+                <maxFileSize>5MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+    </appender>
+
+
+    <appender name="FILE-APPENDER-ONE-ASYNC-WRAPPER" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE-APPENDER-ONE"/>
+    </appender>
+
+
+    <springProfile name="default">
+        <logger name="org.springframework" level="DEBUG" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE-APPENDER-ONE-ASYNC-WRAPPER"/>
+        </root>
+    </springProfile>
+
+    <!-- "!local & !dev & !prod" -->
+    <springProfile name="!default">
+        <root level="INFO">
+            <appender-ref ref="FILE-APPENDER-ONE-ASYNC-WRAPPER"/>
+        </root>
+    </springProfile>
+
+</configuration>

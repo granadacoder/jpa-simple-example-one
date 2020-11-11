@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+group 'com.mycompany.organizationdemo'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+
+
+dependencies {
+    implementation group: 'javax.inject', name: 'javax.inject', version: "${javaxInjectVersion}"
+
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: "${commonsLangVersion}"
+
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion
+
+}

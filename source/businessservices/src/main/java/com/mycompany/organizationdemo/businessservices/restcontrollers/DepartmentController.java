@@ -1,9 +1,11 @@
 package com.mycompany.organizationdemo.businessservices.restcontrollers;
 
+import com.mycompany.components.slf4jextensions.ServiceCorrelationUuidUtility;
 import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentManager;
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +21,7 @@ import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -49,6 +52,15 @@ public final class DepartmentController {
 
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
     Collection<DepartmentDto> getAllDepartments() {
+
+        String correlationUid = ServiceCorrelationUuidUtility.setId();
+
+        String sanityCheck = ServiceCorrelationUuidUtility.getId();
+        if (!correlationUid.equalsIgnoreCase(sanityCheck)) {
+            throw new NullPointerException("MDC did not persist. How is this even happening?????");
+        }
+
+        this.logger.info("Departmeents Get All Start");
         Collection<DepartmentDto> returnItems = this.deptManager.getAll();
         return returnItems;
     }
