@@ -9,7 +9,7 @@ public interface IDepartmentEntityDtoConverter {
 
     DepartmentDto convertToDto(DepartmentJpaEntity entity);
 
-    Collection<DepartmentDto> convertToDtos(final Collection<DepartmentJpaEntity> departmentJpaEntities);
+    Collection<DepartmentDto> convertToDtos(Collection<DepartmentJpaEntity> departmentJpaEntities);
 
     DepartmentJpaEntity convertToEntity(DepartmentDto dto);
 }

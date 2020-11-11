@@ -37,18 +37,17 @@ public class EmployeeJpaEntity implements Serializable {
     @Column(name = "FirstName")
     private String firstName;
 
-    @Column(name = "CreateOffsetDateTime", columnDefinition = OrmConstants.OffsetDateTimeColumnDefinition)
+    @Column(name = "CreateOffsetDateTime", columnDefinition = OrmConstants.OFFSET_DATE_TIME_COLUMN_DEFINITION)
     private OffsetDateTime createOffsetDateTime;
 
     //region Navigation
 
     ////@JsonManagedReference
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DepartmentJpaEntity.class, cascade = CascadeType.PERSIST )
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DepartmentJpaEntity.class, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "DepartmentForeignKey")
     ////////@JsonManagedReference /* deal with cyclic references.  see https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion */
     private DepartmentJpaEntity parentDepartmentJpaEntity;
     //endregion
-
 
     public long getEmployeeKey() {
         return employeeKey;
@@ -102,12 +101,15 @@ public class EmployeeJpaEntity implements Serializable {
 
     //endregion
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         EmployeeJpaEntity employeeJpaEntity = (EmployeeJpaEntity) o;
 

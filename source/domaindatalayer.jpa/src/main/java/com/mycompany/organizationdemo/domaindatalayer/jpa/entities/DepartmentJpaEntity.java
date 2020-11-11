@@ -31,10 +31,13 @@ public class DepartmentJpaEntity implements Serializable {
     @Column(name = "DepartmentKey", unique = true)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long departmentKey;
+
     @Column(name = "DepartmentName", unique = true)
     private String departmentName;
-    @Column(name = "CreateOffsetDateTime", columnDefinition = OrmConstants.OffsetDateTimeColumnDefinition)
+
+    @Column(name = "CreateOffsetDateTime", columnDefinition = OrmConstants.OFFSET_DATE_TIME_COLUMN_DEFINITION)
     private OffsetDateTime createOffsetDateTime;
+
     ////@JsonBackReference
     @OneToMany(
             mappedBy = "parentDepartmentJpaEntity",
@@ -90,12 +93,15 @@ public class DepartmentJpaEntity implements Serializable {
     }
     //endregion
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         DepartmentJpaEntity that = (DepartmentJpaEntity) o;
 

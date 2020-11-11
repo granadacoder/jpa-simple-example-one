@@ -1,6 +1,7 @@
 package com.mycompany.organizationdemo.domaindatalayer.interfaces;
 
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
+
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.Optional;
