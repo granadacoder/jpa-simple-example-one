@@ -10,9 +10,10 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 @Component
-public class MySeedData { //implements ApplicationRunner {
+public final class MySeedData { //implements ApplicationRunner {
 
     private final Logger logger;
+
     private final IDepartmentManager deptManager;
 
     /* The Inject annotation is the signal for which constructor to use for IoC when there are multiple constructors.  Not needed in single constructor scenarios */
@@ -43,9 +44,8 @@ public class MySeedData { //implements ApplicationRunner {
             throw new IllegalArgumentException("IDepartmentManager is null in 'run'");
         }
 
-        DepartmentJpaEntity deptOne = new DepartmentJpaEntity() {{
-            setDepartmentName("DepartmentNineNineNine");
-        }};
+        DepartmentJpaEntity deptOne = new DepartmentJpaEntity();
+        deptOne.setDepartmentName("DepartmentNineNineNine");
 
         this.logger.warn("saveSingle not working, even thought DI looks correct ????.");
 

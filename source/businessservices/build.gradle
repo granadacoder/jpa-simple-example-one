@@ -27,6 +27,9 @@ dependencies {
     /* Ms Sql Server JPA.  Not needed if only using H2 */
     compile 'com.microsoft.sqlserver:mssql-jdbc:8.2.2.jre8'
 
+    // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: logbackClassicVersion
+
     implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion
     implementation group: 'javax.inject', name: 'javax.inject', version: "${javaxInjectVersion}"
 
@@ -35,4 +38,6 @@ dependencies {
     implementation project(':source:domain')
     implementation project(':source:domaindatalayer.interfaces')
     implementation project(':source:domaindatalayer.jpa')
+    
+    implementation project(':source:components:slf4jextensions')
 }

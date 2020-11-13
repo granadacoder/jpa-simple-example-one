@@ -1,15 +1,14 @@
 package com.mycompany.organizationdemo.domaindatalayer.jpa.constants;
 
-public class OrmConstants {
-
-    private OrmConstants()
-    {
-        /* no "static class" in java.  :( */
-    }
+public final class OrmConstants {
 
     /* H2, probably Oracle and MySql */
-    public final static String OffsetDateTimeColumnDefinition = "TIMESTAMP WITH TIME ZONE";
+    public static final String OFFSET_DATE_TIME_COLUMN_DEFINITION = "TIMESTAMP WITH TIME ZONE";
 
     /* Sql Server */
-    //public final static String OffsetDateTimeColumnDefinition = "DATETIMEOFFSET(7)";
+    //public static final String OFFSET_DATE_TIME_COLUMN_DEFINITION = "DATETIMEOFFSET(7)";
+
+    private OrmConstants() {
+        /* no "static class" in java.  :( */
+    }
 }

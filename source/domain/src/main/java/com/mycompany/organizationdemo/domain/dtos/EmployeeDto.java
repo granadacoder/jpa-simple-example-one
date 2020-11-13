@@ -5,10 +5,15 @@ import java.time.OffsetDateTime;
 public class EmployeeDto {
 
     private long employeeKey;
+
     private String ssn;
+
     private String lastName;
+
     private String firstName;
+
     private OffsetDateTime createOffsetDateTime;
+
     private long parentDepartmentKey;
 
     public long getEmployeeKey() {

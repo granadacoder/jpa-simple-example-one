@@ -7,8 +7,11 @@ import java.util.Set;
 public class DepartmentDto {
 
     private long departmentKey;
+
     private String departmentName;
+
     private OffsetDateTime createOffsetDateTime;
+
     private Set<EmployeeDto> employees = new LinkedHashSet<>();
 
     public long getDepartmentKey() {

@@ -2,18 +2,19 @@ package com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.internal
 
 import com.mycompany.organizationdemo.domaindatalayer.jpa.entities.DepartmentJpaEntity;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.projections.DepartmentLiteProjection;
-import java.time.OffsetDateTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import javax.transaction.Transactional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import javax.transaction.Transactional;
+import java.time.OffsetDateTime;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /* java does not have "internal class, internal interface" like C#  :(  */
 public interface InternalDepartmentJpaRepository extends JpaRepository<DepartmentJpaEntity, Long> {
@@ -32,10 +33,8 @@ public interface InternalDepartmentJpaRepository extends JpaRepository<Departmen
   /* projection by interface */
   List<DepartmentLiteProjection> findAllProjectedBy(Pageable pageable);
 
-
   @EntityGraph(attributePaths = {"employeeJpaEntities"})
   Optional<DepartmentJpaEntity> findById(Long key);
-
 
   /* #vsnote.  notice that only 4 methods are defined here, but the IDepartmentRepository has more than that.   JpaRepository is satisfying several of the "usual crud" methods */
 
