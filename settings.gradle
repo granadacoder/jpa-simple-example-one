@@ -4,6 +4,9 @@ include ':source:businesslayer'
 include ':source:domaindatalayer.jpa'
 include ':source:domaindatalayer.interfaces'
 include ':source:domain'
+include ':source:consoleone'
+include ':source:domaindatalayer.inmemory'
+
 
 include ':source:components:slf4jextensions'
 
@@ -17,3 +20,5 @@ the above includes act as a "include this csproj" in .sln terms
 
 "source" allows the actual source-code to exist in a subfolder.  the root folder gets (or can get) very busy, very quickly
 */
+
+

@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class DepartmentDto {
+public final class DepartmentDto {
 
     private long departmentKey;
 

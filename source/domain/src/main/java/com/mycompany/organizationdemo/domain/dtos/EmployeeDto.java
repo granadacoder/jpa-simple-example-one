@@ -2,7 +2,7 @@ package com.mycompany.organizationdemo.domain.dtos;
 
 import java.time.OffsetDateTime;
 
-public class EmployeeDto {
+public final class EmployeeDto {
 
     private long employeeKey;
 
