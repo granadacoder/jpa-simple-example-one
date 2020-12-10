@@ -14,6 +14,8 @@ import java.util.Set;
 
 public final class DepartmentInMemoryRepository implements IDepartmentRepository {
 
+    private static Collection<DepartmentDto> allDepartments = new ArrayList<>();
+
     private final Logger logger;
 
     /* The Inject annotation marks which constructor to use for IoC when there are multiple constructors */
@@ -67,12 +69,24 @@ public final class DepartmentInMemoryRepository implements IDepartmentRepository
 
     @Override
     public DepartmentDto save(final DepartmentDto item) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (null != allDepartments) {
+            allDepartments.add(item);
+        }
+
+        return item;
     }
 
     @Override
     public int deleteByKey(final long departmentKey) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        int returnValue = 0;
+        if (null != allDepartments) {
+            Optional<DepartmentDto> optionalFoundDept = allDepartments.stream().filter(d -> d.getDepartmentKey() == departmentKey).findFirst();
+            if (optionalFoundDept.isPresent()) {
+                returnValue = 1; /* record count */
+                allDepartments.remove(optionalFoundDept.get());
+            }
+        }
+        return returnValue;
     }
 
     @Override
@@ -82,17 +96,25 @@ public final class DepartmentInMemoryRepository implements IDepartmentRepository
     }
 
     private Collection<DepartmentDto> getInMemoryDepartments() {
-        Collection<DepartmentDto> returnItems = new ArrayList<>();
 
-        DepartmentDto dto1 = new DepartmentDto();
-        dto1.setDepartmentName("Department One");
-        returnItems.add(dto1);
+        if (null == allDepartments || allDepartments.isEmpty()) {
+            Collection<DepartmentDto> lazyCollection = new ArrayList<>();
 
-        DepartmentDto dto2 = new DepartmentDto();
-        dto2.setDepartmentName("Department Two");
-        returnItems.add(dto2);
+            final int deptKey101 = 101;
+            DepartmentDto dto1 = new DepartmentDto();
+            dto1.setDepartmentKey(deptKey101);
+            dto1.setDepartmentName("Department One");
+            lazyCollection.add(dto1);
 
-        return returnItems;
+            final int deptKey102 = 102;
+            DepartmentDto dto2 = new DepartmentDto();
+            dto2.setDepartmentKey(deptKey102);
+            dto2.setDepartmentName("Department Two");
+            lazyCollection.add(dto2);
 
+            allDepartments = lazyCollection;
+        }
+
+        return allDepartments;
     }
 }
