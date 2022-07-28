@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
-public interface IDepartmentManager {
+public interface IDepartmentQueryManager {
 
     long getAllCount();
 
@@ -19,11 +19,8 @@ public interface IDepartmentManager {
 
     Optional<DepartmentDto> getSingleByName(String deptName);
 
-    DepartmentDto saveSingle(DepartmentDto item);
-
     Collection<DepartmentDto> getByKeys(Set<Long> departmentKeys);
 
     Collection<DepartmentDto> getDepartmentsOlderThanDate(OffsetDateTime zdt);
 
-    int deleteByKey(long key);
 }

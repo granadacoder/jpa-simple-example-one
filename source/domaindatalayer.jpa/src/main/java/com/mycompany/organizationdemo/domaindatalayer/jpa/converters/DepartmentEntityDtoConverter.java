@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 
 public final class DepartmentEntityDtoConverter implements IDepartmentEntityDtoConverter {
 
+    public static final String ERROR_MSG_LOGGER_IS_NULL = "Logger is null";
+
     private final Logger logger;
 
     private final ModelMapper modelMapper;
@@ -31,7 +33,7 @@ public final class DepartmentEntityDtoConverter implements IDepartmentEntityDtoC
     public DepartmentEntityDtoConverter(Logger lgr, ModelMapper mm) {
 
         if (null == lgr) {
-            throw new IllegalArgumentException("Logger is null");
+            throw new IllegalArgumentException(ERROR_MSG_LOGGER_IS_NULL);
         }
 
         if (null == mm) {

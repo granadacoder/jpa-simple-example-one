@@ -16,20 +16,34 @@
         <constructor-arg ref="modelMapperBean"/>
     </bean>
 
-    <bean id="xmlDepartmentRepositoryBean"
-          class="com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentRepository">
+    <bean id="xmlDepartmentQueryRepositoryBean"
+          class="com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentQueryRepository">
         <constructor-arg ref="xmlDepartmentEntityDtoConverterBean"/>
-        <!-- note, the below is the first.letter.lower.case of the classname "com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentRepository spring-di voodoo -->
+        <!-- note, the below is the first.letter.lower.case of the classname "com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentQueryRepository spring-di voodoo -->
         <constructor-arg ref="internalDepartmentJpaRepository"/>
     </bean>
 
 
-    <bean id="xmlDepartmentManagerBean" class="com.mycompany.organizationdemo.businesslayer.managers.DepartmentManager">
-        <constructor-arg ref="xmlDepartmentRepositoryBean"/>
+    <bean id="xmlDepartmentQueryManagerBean" class="com.mycompany.organizationdemo.businesslayer.managers.DepartmentQueryManager">
+        <constructor-arg ref="xmlDepartmentQueryRepositoryBean"/>
     </bean>
 
+    <bean id="xmlDepartmentCommandRepositoryBean"
+          class="com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentCommandRepository">
+        <constructor-arg ref="xmlDepartmentEntityDtoConverterBean"/>
+        <!-- note, the below is the first.letter.lower.case of the classname "com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentCommandRepository spring-di voodoo -->
+        <constructor-arg ref="internalDepartmentJpaRepository"/>
+    </bean>
+
+
+    <bean id="xmlDepartmentCommandManagerBean" class="com.mycompany.organizationdemo.businesslayer.managers.DepartmentCommandManager">
+        <constructor-arg ref="xmlDepartmentCommandRepositoryBean"/>
+    </bean>
+
+
     <bean id="xmlSeedDataBean" class="com.mycompany.organizationdemo.businessservices.configuration.MySeedData">
-        <constructor-arg ref="xmlDepartmentManagerBean"/>
+        <constructor-arg ref="xmlDepartmentQueryManagerBean"/>
+        <constructor-arg ref="xmlDepartmentCommandManagerBean"/>
     </bean>
 
 </beans>

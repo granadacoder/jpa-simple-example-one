@@ -36,7 +36,7 @@ public interface InternalDepartmentJpaRepository extends JpaRepository<Departmen
   @EntityGraph(attributePaths = {"employeeJpaEntities"})
   Optional<DepartmentJpaEntity> findById(Long key);
 
-  /* #vsnote.  notice that only 4 methods are defined here, but the IDepartmentRepository has more than that.   JpaRepository is satisfying several of the "usual crud" methods */
+  /* #vsnote.  notice that only 4 methods are defined here, but the IDepartmentQueryRepository has more than that.   JpaRepository is satisfying several of the "usual crud" methods */
 
   //@EntityGraph(attributePaths = {"employees"})
   @Query("SELECT d FROM DepartmentJpaEntity d LEFT JOIN FETCH d.employeeJpaEntities WHERE d.departmentName = :departmentName") /* this works because departmentName is a UNIQUE constraint...otherwise it might give back duplicate parents (Departments) */

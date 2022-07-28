@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
-public interface IDepartmentRepository {
+public interface IDepartmentQueryRepository {
 
   long getTheAllCount();
 
@@ -22,10 +22,6 @@ public interface IDepartmentRepository {
   Collection<DepartmentDto> findByCreateOffsetDateTimeBefore(OffsetDateTime zdt);
 
   Collection<DepartmentDto> findBySurrogateKeyIn(Set<Long> departmentKeys);
-
-  DepartmentDto save(DepartmentDto item);
-
-  int deleteByKey(long departmentKey);
 
   Collection<DepartmentDto> findOrphanedDepartments();
 }

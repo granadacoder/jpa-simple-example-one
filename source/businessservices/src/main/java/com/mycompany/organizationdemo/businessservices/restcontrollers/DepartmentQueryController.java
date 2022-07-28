@@ -1,16 +1,14 @@
 package com.mycompany.organizationdemo.businessservices.restcontrollers;
 
 import com.mycompany.components.slf4jextensions.ServiceCorrelationUuidUtility;
-import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentManager;
+import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentQueryManager;
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,29 +21,31 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1")
-public final class DepartmentController {
+public final class DepartmentQueryController {
+
+    public static final String ERROR_MSG_LOGGER_IS_NULL = "Logger is null";
 
     private final Logger logger;
 
-    private final IDepartmentManager deptManager;
+    private final IDepartmentQueryManager deptQueryManager;
 
     /* The Inject annotation is the signal for which constructor to use for IoC when there are multiple constructors.  Not needed in single constructor scenarios */
     @Inject
-    public DepartmentController(IDepartmentManager deptManager) {
-        this(LoggerFactory.getLogger(DepartmentController.class), deptManager);
+    public DepartmentQueryController(IDepartmentQueryManager deptQueryManager) {
+        this(LoggerFactory.getLogger(DepartmentQueryController.class), deptQueryManager);
     }
 
-    public DepartmentController(Logger lgr, IDepartmentManager deptManager) {
+    public DepartmentQueryController(Logger lgr, IDepartmentQueryManager deptQueryManager) {
         if (null == lgr) {
-            throw new IllegalArgumentException("Logger is null");
+            throw new IllegalArgumentException(ERROR_MSG_LOGGER_IS_NULL);
         }
 
-        if (null == deptManager) {
-            throw new IllegalArgumentException("IDepartmentManager is null");
+        if (null == deptQueryManager) {
+            throw new IllegalArgumentException("IDepartmentQueryManager is null");
         }
 
         this.logger = lgr;
-        this.deptManager = deptManager;
+        this.deptQueryManager = deptQueryManager;
     }
 
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
@@ -59,20 +59,20 @@ public final class DepartmentController {
         }
 
         this.logger.info("Departmeents Get All Start");
-        Collection<DepartmentDto> returnItems = this.deptManager.getAll();
+        Collection<DepartmentDto> returnItems = this.deptQueryManager.getAll();
         return returnItems;
     }
 
     @RequestMapping(value = "/departments/orphans", method = RequestMethod.GET)
     Collection<DepartmentDto> getAllOrphanedDepartments() {
-        Collection<DepartmentDto> returnItems = this.deptManager.getAllNoEmployees();
+        Collection<DepartmentDto> returnItems = this.deptQueryManager.getAllNoEmployees();
         return returnItems;
     }
 
     @RequestMapping(value = "/departments/beforecreatedate/{zdt}", method = RequestMethod.GET)
     Collection<DepartmentDto> getAllDepartmentsByBeforeCreateDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime zdt) {
         this.logger.info(String.format("Method getAllDepartmentsByBeforeCreateDate called. (zdt=\"%1s\")", zdt));
-        Collection<DepartmentDto> returnItems = this.deptManager.getDepartmentsOlderThanDate(zdt);
+        Collection<DepartmentDto> returnItems = this.deptQueryManager.getDepartmentsOlderThanDate(zdt);
         return returnItems;
     }
 
@@ -80,7 +80,7 @@ public final class DepartmentController {
     Collection<DepartmentDto> getDepartmentByKeys(@PathVariable Set<Long> deptKeys) {
 
         this.logger.info(String.format("Method getDepartmentByKeys called. (deptKey=\"%1s\")", deptKeys));
-        Collection<DepartmentDto> returnItems = this.deptManager.getByKeys(deptKeys);
+        Collection<DepartmentDto> returnItems = this.deptQueryManager.getByKeys(deptKeys);
         return returnItems;
     }
 
@@ -89,7 +89,7 @@ public final class DepartmentController {
 
         this.logger.info(String.format("Method getDepartmentById called. (deptKey=\"%1s\")", deptKey));
 
-        Optional<DepartmentDto> foundItem = this.deptManager.getSingle(deptKey);
+        Optional<DepartmentDto> foundItem = this.deptQueryManager.getSingle(deptKey);
         ResponseEntity<DepartmentDto> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         if (foundItem.isPresent()) {
@@ -104,38 +104,13 @@ public final class DepartmentController {
 
         this.logger.info(String.format("Method getDepartmentByName called. (deptName=\"%1s\")", deptName));
 
-        Optional<DepartmentDto> foundItem = this.deptManager.getSingleByName(deptName);
+        Optional<DepartmentDto> foundItem = this.deptQueryManager.getSingleByName(deptName);
         ResponseEntity<DepartmentDto> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         if (foundItem.isPresent()) {
             responseEntity = new ResponseEntity<>(foundItem.get(), HttpStatus.OK);
         }
 
-        return responseEntity;
-    }
-
-    @RequestMapping(value = "departments/{deptKey}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> deleteUser(@PathVariable("deptKey") Long deptKey) {
-        this.logger.info(String.format("Method deleteUser called. (deptKey=\"%1s\")", deptKey));
-
-        int rowCount = this.deptManager.deleteByKey(deptKey);
-        ResponseEntity<Integer> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        if (rowCount > 0) {
-            responseEntity = new ResponseEntity<>(rowCount, HttpStatus.OK);
-        }
-
-        return responseEntity;
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "departments/department", produces = {"application/json"}, consumes = {"application/json"})
-    ResponseEntity<DepartmentDto> createDepartment(@RequestBody DepartmentDto inputItem) {
-
-        this.logger.info(String.format("Method createDepartment called. (inputItem=\"%1s\")", inputItem));
-
-        DepartmentDto foundItem = this.deptManager.saveSingle(inputItem);
-        ResponseEntity<DepartmentDto> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        responseEntity = new ResponseEntity<>(foundItem, HttpStatus.OK);
         return responseEntity;
     }
 

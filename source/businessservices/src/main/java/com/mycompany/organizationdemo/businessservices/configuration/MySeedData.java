@@ -1,6 +1,7 @@
 package com.mycompany.organizationdemo.businessservices.configuration;
 
-import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentManager;
+import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentCommandManager;
+import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentQueryManager;
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,39 +11,48 @@ import javax.inject.Inject;
 
 public final class MySeedData { //implements ApplicationRunner {
 
+    public static final String ERROR_MSG_LOGGER_IS_NULL = "Logger is null";
+
     private final Logger logger;
 
-    private final IDepartmentManager deptManager;
+    private final IDepartmentQueryManager deptQueryManager;
+
+    private final IDepartmentCommandManager deptCommandManager;
 
     /* The Inject annotation is the signal for which constructor to use for IoC when there are multiple constructors.  Not needed in single constructor scenarios */
     @Inject
-    public MySeedData(IDepartmentManager deptManager) {
-        this(LoggerFactory.getLogger(MySeedData.class), deptManager);
+    public MySeedData(IDepartmentQueryManager deptQueryManager, IDepartmentCommandManager deptCommandManager) {
+        this(LoggerFactory.getLogger(MySeedData.class), deptQueryManager, deptCommandManager);
     }
 
-    public MySeedData(Logger lgr, IDepartmentManager deptManager) {
+    public MySeedData(Logger lgr, IDepartmentQueryManager deptQueryManager, IDepartmentCommandManager deptCommandManager) {
 
         if (null == lgr) {
-            throw new IllegalArgumentException("Logger is null");
+            throw new IllegalArgumentException(ERROR_MSG_LOGGER_IS_NULL);
         }
 
-        if (null == deptManager) {
-            throw new IllegalArgumentException("IDepartmentManager is null");
+        if (null == deptQueryManager) {
+            throw new IllegalArgumentException("IDepartmentQueryManager is null");
+        }
+
+        if (null == deptCommandManager) {
+            throw new IllegalArgumentException("IDepartmentCommandManager is null");
         }
 
         this.logger = lgr;
-        this.deptManager = deptManager;
+        this.deptQueryManager = deptQueryManager;
+        this.deptCommandManager = deptCommandManager;
     }
 
     @PostConstruct
     public void loadData() {
 ////    public void run(ApplicationArguments args) {
 
-        if (null == this.deptManager) {
-            throw new IllegalArgumentException("IDepartmentManager is null in 'run'");
+        if (null == this.deptQueryManager) {
+            throw new IllegalArgumentException("IDepartmentQueryManager is null in 'run'");
         }
 
-        long currentDeptCount = this.deptManager.getAllCount();
+        long currentDeptCount = this.deptQueryManager.getAllCount();
 
         long deptKey = Long.MAX_VALUE - currentDeptCount;
 
@@ -50,8 +60,8 @@ public final class MySeedData { //implements ApplicationRunner {
         deptNineNineNine.setDepartmentName("DepartmentViaSeedData" + Long.toString(deptKey));
         deptNineNineNine.setDepartmentKey(deptKey);
 
-        DepartmentDto saveResult = this.deptManager.saveSingle(deptNineNineNine);
-        //this.deptManager.save(new DepartmentJpaEntity() {{setDepartmentName("DepartmentTwo"); }});
+        DepartmentDto saveResult = this.deptCommandManager.saveSingle(deptNineNineNine);
+        //this.deptQueryManager.save(new DepartmentJpaEntity() {{setDepartmentName("DepartmentTwo"); }});
 
         this.logger.info(String.format("SeedData SaveSingle Result.  (DepartmentKey=\"%1$s\", DepartmentName=\"%2$s\")", saveResult.getDepartmentKey(), saveResult.getDepartmentName()));
     }

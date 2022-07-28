@@ -1,7 +1,7 @@
 package com.mycompany.organizationdemo.domaindatalayer.jpa.repositories;
 
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
-import com.mycompany.organizationdemo.domaindatalayer.interfaces.IDepartmentRepository;
+import com.mycompany.organizationdemo.domaindatalayer.interfaces.IDepartmentQueryRepository;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.converters.interfaces.IDepartmentEntityDtoConverter;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.entities.DepartmentJpaEntity;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.entities.DepartmentJpaEntity_;
@@ -29,7 +29,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public final class DepartmentRepository implements IDepartmentRepository {
+public final class DepartmentQueryRepository implements IDepartmentQueryRepository {
+
+    public static final String ERROR_MSG_LOGGER_IS_NULL = "Logger is null";
 
     public static final int PAGE_SIZE_TEN = 10;
 
@@ -43,13 +45,13 @@ public final class DepartmentRepository implements IDepartmentRepository {
 
     /* The Inject annotation marks which constructor to use for IoC when there are multiple constructors */
     @Inject
-    public DepartmentRepository(EntityManager em, IDepartmentEntityDtoConverter deptConverter, InternalDepartmentJpaRepository deptRepo) {
-        this(LoggerFactory.getLogger(DepartmentRepository.class), em, deptConverter, deptRepo);
+    public DepartmentQueryRepository(EntityManager em, IDepartmentEntityDtoConverter deptConverter, InternalDepartmentJpaRepository deptCommandRepo) {
+        this(LoggerFactory.getLogger(DepartmentQueryRepository.class), em, deptConverter, deptCommandRepo);
     }
 
-    public DepartmentRepository(Logger lgr, EntityManager em, IDepartmentEntityDtoConverter deptConverter, InternalDepartmentJpaRepository internalDepartmentJpaRepository) {
+    public DepartmentQueryRepository(Logger lgr, EntityManager em, IDepartmentEntityDtoConverter deptConverter, InternalDepartmentJpaRepository internalDepartmentJpaRepository) {
         if (null == lgr) {
-            throw new IllegalArgumentException("Logger is null");
+            throw new IllegalArgumentException(ERROR_MSG_LOGGER_IS_NULL);
         }
 
         if (null == deptConverter) {
@@ -154,20 +156,6 @@ public final class DepartmentRepository implements IDepartmentRepository {
         /* right here, desperately hoping for each DepartmentJpaEntity in the "entities" to NOT have employees hydrated */
         Collection<DepartmentDto> returnItems = this.deptConverter.convertToDtos(entities);
         return returnItems;
-    }
-
-    @Override
-    public DepartmentDto save(DepartmentDto item) {
-        DepartmentJpaEntity entity = this.deptConverter.convertToEntity(item);
-        DepartmentJpaEntity savedEntity = this.internalDepartmentJpaRepository.save(entity);
-        DepartmentDto returnItem = this.deptConverter.convertToDto(savedEntity);
-        return returnItem;
-    }
-
-    @Override
-    public int deleteByKey(long departmentKey) {
-        int returnValue = this.internalDepartmentJpaRepository.deleteDepartmentByDepartmentKey(departmentKey);
-        return returnValue;
     }
 
     @Override
