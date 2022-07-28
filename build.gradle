@@ -3,12 +3,12 @@ buildscript {
     ext {
         spring_plugin_version = '2.7.0'
         springBootVersion = '2.7.0'
-        
-        
+
+
         slf4jVersion = "1.7.36"
         logbackClassicVersion = '1.2.11'
-        
-        
+
+
         javaxInjectVersion = "1"
         javaxPersistenceApiVersion = "2.2"
         junitVersion = "4.13.2"

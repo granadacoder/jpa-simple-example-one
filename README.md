@@ -4,6 +4,9 @@
 
 Environment Variables (need to set them under Run/Configurations)
 
+        Name
+        Value
+
 For (H2 In Memory)
 
     SPRING_DATASOURCE_URL
@@ -18,6 +21,9 @@ For (H2 In Memory)
     SPRING_DATASOURCE_DRIVER-CLASS-NAME
     org.h2.Driver
     
+    SPRING_DATASOURCE_DIALECT
+    org.hibernate.dialect.H2Dialect
+    
 or the IntelliJ "workspace.xml" (usually at "\.idea\workspace.xml") syntax:
 
       <envs>
@@ -25,9 +31,10 @@ or the IntelliJ "workspace.xml" (usually at "\.idea\workspace.xml") syntax:
         <env name="SPRING_DATASOURCE_USERNAME" value="myUserName" />
         <env name="SPRING_DATASOURCE_PASSWORD" value="" />
         <env name="SPRING_DATASOURCE_DRIVER-CLASS-NAME" value="org.h2.Driver" />
+        <env name="SPRING_DATASOURCE_DIALECT" value="org.hibernate.dialect.H2Dialect" />
       </envs>
 
-Ms Sql Server
+Ms Sql Server (Note, your URL, USERNAME, PASSWORD may vary)
 
     SPRING_DATASOURCE_URL
     jdbc:sqlserver://localhost:1433;instanceName=SQLEXPRESSMyInstanceName;DatabaseName=MyDB;
@@ -41,6 +48,9 @@ Ms Sql Server
     SPRING_DATASOURCE_DRIVER-CLASS-NAME
     com.microsoft.sqlserver.jdbc.SQLServerDriver
     
+    SPRING_DATASOURCE_DIALECT
+    org.hibernate.dialect.SQLServerDialect
+    
  or the IntelliJ "workspace.xml" (usually at "\.idea\workspace.xml") syntax:
  
        <envs>
@@ -48,6 +58,7 @@ Ms Sql Server
          <env name="SPRING_DATASOURCE_USERNAME" value="mySqlAuthenticationUserName" />
          <env name="SPRING_DATASOURCE_PASSWORD" value="mySqlAuthenticationPassword" />
          <env name="SPRING_DATASOURCE_DRIVER-CLASS-NAME" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+         <env name="SPRING_DATASOURCE_DIALECT" value="org.hibernate.dialect.SQLServerDialect" />         
        </envs>
 
 Note, mySqlAuthenticationUserName probably needs sysadmin privileges
@@ -57,15 +68,6 @@ NOTE:
 
 H2 vs MsSqlServer Manual Changes.
     
-There is still one non-environment variable driven option in application.yml.
-
-    properties:
-      hibernate:
-        dialect:    
-
-For the above breadcrumb : you have to comment/uncomment out for H2 vs MsSqlServer
-
-
 You'll need to comment/uncomment values in this file for the DateTimeOffset syntax:
     com.mycompany.organizationdemo.domaindatalayer.jpa.constants.OrmConstants(.java)
     
@@ -74,6 +76,12 @@ and comments above it.  You'll need to change the column-type for the 2 differen
 ...............
 
 POSTMAN Requests
+
+  As Postman:
+ 
+    wrking/examples/postman/DepartmentEmployeeJavaRest.postman_collection.json
+
+  Manual:
 
     GET
     http://localhost:8080/api/v1/departments
