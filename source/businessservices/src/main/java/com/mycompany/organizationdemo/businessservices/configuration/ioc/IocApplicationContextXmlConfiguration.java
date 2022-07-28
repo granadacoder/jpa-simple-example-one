@@ -6,5 +6,5 @@ import org.springframework.context.annotation.ImportResource;
 /* the annotations drive this functionality */
 @Configuration
 @ImportResource({"classpath*:applicationContext.xml"})
-public class MyIocXmlConfiguration {
+public class IocApplicationContextXmlConfiguration {
 }

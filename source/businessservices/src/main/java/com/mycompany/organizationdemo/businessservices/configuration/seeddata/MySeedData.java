@@ -1,7 +1,7 @@
-package com.mycompany.organizationdemo.businessservices.configuration;
+package com.mycompany.organizationdemo.businessservices.configuration.seeddata;
 
-import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentCommandManager;
-import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentQueryManager;
+import com.mycompany.organizationdemo.businesslayer.managers.commands.interfaces.IDepartmentCommandManager;
+import com.mycompany.organizationdemo.businesslayer.managers.queries.interfaces.IDepartmentQueryManager;
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

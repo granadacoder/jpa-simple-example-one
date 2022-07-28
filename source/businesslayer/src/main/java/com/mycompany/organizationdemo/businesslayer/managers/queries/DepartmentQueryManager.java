@@ -1,6 +1,6 @@
-package com.mycompany.organizationdemo.businesslayer.managers;
+package com.mycompany.organizationdemo.businesslayer.managers.queries;
 
-import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentQueryManager;
+import com.mycompany.organizationdemo.businesslayer.managers.queries.interfaces.IDepartmentQueryManager;
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 import com.mycompany.organizationdemo.domaindatalayer.interfaces.IDepartmentQueryRepository;
 import org.slf4j.Logger;

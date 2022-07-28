@@ -1,7 +1,7 @@
-package com.mycompany.organizationdemo.businessservices.restcontrollers;
+package com.mycompany.organizationdemo.businessservices.restcontrollers.queries;
 
 import com.mycompany.components.slf4jextensions.ServiceCorrelationUuidUtility;
-import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentQueryManager;
+import com.mycompany.organizationdemo.businesslayer.managers.queries.interfaces.IDepartmentQueryManager;
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1")
-public final class DepartmentQueryController {
+public final class DepartmentQueryRestController {
 
     public static final String ERROR_MSG_LOGGER_IS_NULL = "Logger is null";
 
@@ -31,11 +31,11 @@ public final class DepartmentQueryController {
 
     /* The Inject annotation is the signal for which constructor to use for IoC when there are multiple constructors.  Not needed in single constructor scenarios */
     @Inject
-    public DepartmentQueryController(IDepartmentQueryManager deptQueryManager) {
-        this(LoggerFactory.getLogger(DepartmentQueryController.class), deptQueryManager);
+    public DepartmentQueryRestController(IDepartmentQueryManager deptQueryManager) {
+        this(LoggerFactory.getLogger(DepartmentQueryRestController.class), deptQueryManager);
     }
 
-    public DepartmentQueryController(Logger lgr, IDepartmentQueryManager deptQueryManager) {
+    public DepartmentQueryRestController(Logger lgr, IDepartmentQueryManager deptQueryManager) {
         if (null == lgr) {
             throw new IllegalArgumentException(ERROR_MSG_LOGGER_IS_NULL);
         }

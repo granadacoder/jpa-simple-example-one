@@ -1,4 +1,4 @@
-package com.mycompany.organizationdemo.businesslayer.managers.interfaces;
+package com.mycompany.organizationdemo.businesslayer.managers.queries.interfaces;
 
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 

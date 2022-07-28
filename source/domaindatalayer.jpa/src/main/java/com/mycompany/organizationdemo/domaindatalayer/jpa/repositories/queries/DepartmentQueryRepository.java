@@ -1,4 +1,4 @@
-package com.mycompany.organizationdemo.domaindatalayer.jpa.repositories;
+package com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.queries;
 
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 import com.mycompany.organizationdemo.domaindatalayer.interfaces.IDepartmentQueryRepository;
