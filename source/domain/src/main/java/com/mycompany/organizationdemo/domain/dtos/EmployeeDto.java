@@ -1,8 +1,12 @@
 package com.mycompany.organizationdemo.domain.dtos;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 
-public class EmployeeDto {
+@SuppressWarnings("checkstyle:DesignForExtension") /* "mapper" does not like final objects */
+public class EmployeeDto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private long employeeKey;
 

@@ -25,7 +25,12 @@ import java.util.Set;
 //                @NamedAttributeNode("departmentName")})
 //})
 @Table(name = "DepartmentTable")
+@SuppressWarnings("checkstyle:DesignForExtension") /* jpa-entities cannot be final */
 public class DepartmentJpaEntity implements Serializable {
+
+    public static final int HASH_CODE_INITIAL_ODD_NUMBER = 17;
+
+    public static final int HASH_CODE_MULTIPLIER_ODD_NUMBER = 37;
 
     @Id
     @Column(name = "DepartmentKey", unique = true)
@@ -113,7 +118,7 @@ public class DepartmentJpaEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        return new org.apache.commons.lang3.builder.HashCodeBuilder(17, 37)
+        return new org.apache.commons.lang3.builder.HashCodeBuilder(HASH_CODE_INITIAL_ODD_NUMBER, HASH_CODE_MULTIPLIER_ODD_NUMBER)
                 .append(departmentKey)
                 .append(departmentName)
                 .toHashCode();

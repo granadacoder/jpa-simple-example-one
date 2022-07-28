@@ -21,7 +21,12 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "EmployeeTable")
+@SuppressWarnings("checkstyle:DesignForExtension") /* jpa-entities cannot be final */
 public class EmployeeJpaEntity implements Serializable {
+
+    public static final int HASH_CODE_INITIAL_ODD_NUMBER = 17;
+
+    public static final int HASH_CODE_MULTIPLIER_ODD_NUMBER = 37;
 
     @Id
     @Column(name = "EmployeeKey", unique = true)
@@ -121,7 +126,7 @@ public class EmployeeJpaEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
+        return new HashCodeBuilder(HASH_CODE_INITIAL_ODD_NUMBER, HASH_CODE_MULTIPLIER_ODD_NUMBER)
                 .append(employeeKey)
                 .append(ssn)
                 .toHashCode();

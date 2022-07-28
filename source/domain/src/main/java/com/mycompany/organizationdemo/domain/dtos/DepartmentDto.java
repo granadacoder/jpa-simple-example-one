@@ -1,10 +1,14 @@
 package com.mycompany.organizationdemo.domain.dtos;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class DepartmentDto {
+@SuppressWarnings("checkstyle:DesignForExtension") /* "mapper" does not like final objects */
+public class DepartmentDto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private long departmentKey;
 
