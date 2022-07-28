@@ -13,6 +13,14 @@ public final class MySeedData { //implements ApplicationRunner {
 
     public static final String ERROR_MSG_LOGGER_IS_NULL = "Logger is null";
 
+    public static final String ERROR_MSG_I_DEPARTMENT_QUERY_MANAGER_IS_NULL = "IDepartmentQueryManager is null";
+
+    public static final String ERROR_MSG_I_DEPARTMENT_COMMAND_MANAGER_IS_NULL = "IDepartmentCommandManager is null";
+
+    public static final String ERROR_MSG_IDEPARTMENT_QUERY_MANAGER_IS_NULL_IN_LOAD_DATA = "IDepartmentQueryManager is null in 'loadData'";
+
+    public static final String ERROR_MSG_IDEPARTMENT_COMMAND_MANAGER_IS_NULL_IN_LOAD_DATA = "IDepartmentCommandManager is null in 'loadData'";
+
     private final Logger logger;
 
     private final IDepartmentQueryManager deptQueryManager;
@@ -32,11 +40,11 @@ public final class MySeedData { //implements ApplicationRunner {
         }
 
         if (null == deptQueryManager) {
-            throw new IllegalArgumentException("IDepartmentQueryManager is null");
+            throw new IllegalArgumentException(ERROR_MSG_I_DEPARTMENT_QUERY_MANAGER_IS_NULL);
         }
 
         if (null == deptCommandManager) {
-            throw new IllegalArgumentException("IDepartmentCommandManager is null");
+            throw new IllegalArgumentException(ERROR_MSG_I_DEPARTMENT_COMMAND_MANAGER_IS_NULL);
         }
 
         this.logger = lgr;
@@ -49,7 +57,11 @@ public final class MySeedData { //implements ApplicationRunner {
 ////    public void run(ApplicationArguments args) {
 
         if (null == this.deptQueryManager) {
-            throw new IllegalArgumentException("IDepartmentQueryManager is null in 'run'");
+            throw new IllegalArgumentException(ERROR_MSG_IDEPARTMENT_QUERY_MANAGER_IS_NULL_IN_LOAD_DATA);
+        }
+
+        if (null == this.deptCommandManager) {
+            throw new IllegalArgumentException(ERROR_MSG_IDEPARTMENT_COMMAND_MANAGER_IS_NULL_IN_LOAD_DATA);
         }
 
         long currentDeptCount = this.deptQueryManager.getAllCount();

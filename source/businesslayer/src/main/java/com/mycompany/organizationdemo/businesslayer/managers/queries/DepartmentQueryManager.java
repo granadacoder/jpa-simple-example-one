@@ -16,6 +16,8 @@ public final class DepartmentQueryManager implements IDepartmentQueryManager {
 
     public static final String ERROR_MSG_LOGGER_IS_NULL = "Logger is null";
 
+    public static final String ERROR_MSG_I_DEPARTMENT_QUERY_REPOSITORY_IS_NULL = "IDepartmentQueryRepository is null";
+
     private final Logger logger;
 
     private final IDepartmentQueryRepository deptQueryRepo;
@@ -32,7 +34,7 @@ public final class DepartmentQueryManager implements IDepartmentQueryManager {
         }
 
         if (null == deptQueryRepo) {
-            throw new IllegalArgumentException("IDepartmentQueryRepository is null");
+            throw new IllegalArgumentException(ERROR_MSG_I_DEPARTMENT_QUERY_REPOSITORY_IS_NULL);
         }
 
         this.logger = lgr;

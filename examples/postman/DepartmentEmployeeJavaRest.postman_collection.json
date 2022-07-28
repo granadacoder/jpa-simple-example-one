@@ -151,10 +151,19 @@
 		{
 			"name": "Departments Add New",
 			"request": {
-				"method": "DELETE",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "                {\n                    \"departmentName\": \"DepartmentNine\",\n                    \"createOffsetDateTime\": \"2020-06-09T08:53:55.547-04:00\",\n                    \"employees\": [\n                        {\n                            \"ssn\": \"000-00-9992\",\n                            \"lastName\": \"Nottingham\",\n                            \"firstName\": \"Nathanial\",\n                            \"createOffsetDateTime\": \"2020-06-09T08:53:55.559-04:00\",\n                            \"parentDepartmentKey\": 999\n                        },\n                        {\n                            \"ssn\": \"000-00-9993\",\n                            \"lastName\": \"Nottingham\",\n                            \"firstName\": \"Nancy\",\n                            \"createOffsetDateTime\": \"2020-06-09T08:53:55.559-04:00\",\n                            \"parentDepartmentKey\": 999\n                        },\n                        {\n                            \"ssn\": \"000-00-9991\",\n                            \"lastName\": \"Nottingham\",\n                            \"firstName\": \"Nina\",\n                            \"createOffsetDateTime\": \"2020-06-09T08:53:55.559-04:00\",\n                            \"parentDepartmentKey\": 999\n                        }\n                    ]\n                }     ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{BaseUrl}}/api/v1/departments/222",
+					"raw": "{{BaseUrl}}/api/v1/departments/department",
 					"host": [
 						"{{BaseUrl}}"
 					],
@@ -162,7 +171,7 @@
 						"api",
 						"v1",
 						"departments",
-						"222"
+						"department"
 					]
 				}
 			},

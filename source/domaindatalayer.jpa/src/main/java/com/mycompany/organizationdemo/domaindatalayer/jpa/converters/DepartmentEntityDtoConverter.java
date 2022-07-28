@@ -20,6 +20,8 @@ public final class DepartmentEntityDtoConverter implements IDepartmentEntityDtoC
 
     public static final String ERROR_MSG_LOGGER_IS_NULL = "Logger is null";
 
+    public static final String ERROR_MSG_MODEL_MAPPER_IS_NULL = "ModelMapper is null";
+
     private final Logger logger;
 
     private final ModelMapper modelMapper;
@@ -37,7 +39,7 @@ public final class DepartmentEntityDtoConverter implements IDepartmentEntityDtoC
         }
 
         if (null == mm) {
-            throw new IllegalArgumentException("ModelMapper is null");
+            throw new IllegalArgumentException(ERROR_MSG_MODEL_MAPPER_IS_NULL);
         }
 
         this.logger = lgr;

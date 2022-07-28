@@ -33,6 +33,12 @@ public final class DepartmentQueryRepository implements IDepartmentQueryReposito
 
     public static final String ERROR_MSG_LOGGER_IS_NULL = "Logger is null";
 
+    public static final String ERROR_MSG_I_DEPARTMENT_ENTITY_DTO_CONVERTER_IS_NULL = "IDepartmentEntityDtoConverter is null";
+
+    public static final String ERROR_MSG_INTERNAL_DEPARTMENT_JPA_REPOSITORY_IS_NULL = "InternalDepartmentJpaRepository is null";
+
+    public static final String ERROR_MSG_ENTITY_MANAGER_IS_NULL = "EntityManager is null";
+
     public static final int PAGE_SIZE_TEN = 10;
 
     private final Logger logger;
@@ -55,15 +61,15 @@ public final class DepartmentQueryRepository implements IDepartmentQueryReposito
         }
 
         if (null == deptConverter) {
-            throw new IllegalArgumentException("IDepartmentEntityDtoConverter is null");
+            throw new IllegalArgumentException(ERROR_MSG_I_DEPARTMENT_ENTITY_DTO_CONVERTER_IS_NULL);
         }
 
         if (null == internalDepartmentJpaRepository) {
-            throw new IllegalArgumentException("InternalDepartmentJpaRepository is null");
+            throw new IllegalArgumentException(ERROR_MSG_INTERNAL_DEPARTMENT_JPA_REPOSITORY_IS_NULL);
         }
 
         if (null == em) {
-            throw new IllegalArgumentException("EntityManager is null");
+            throw new IllegalArgumentException(ERROR_MSG_ENTITY_MANAGER_IS_NULL);
         }
 
         this.logger = lgr;

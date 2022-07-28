@@ -12,6 +12,8 @@ public final class DepartmentCommandManager implements IDepartmentCommandManager
 
     public static final String ERROR_MSG_LOGGER_IS_NULL = "Logger is null";
 
+    public static final String ERROR_MSG_I_DEPARTMENT_COMMAND_REPOSITORY_IS_NULL = "IDepartmentCommandRepository is null";
+
     private final Logger logger;
 
     private final IDepartmentCommandRepository deptCommandRepo;
@@ -28,7 +30,7 @@ public final class DepartmentCommandManager implements IDepartmentCommandManager
         }
 
         if (null == deptCommandRepo) {
-            throw new IllegalArgumentException("IDepartmentDomainData is null");
+            throw new IllegalArgumentException(ERROR_MSG_I_DEPARTMENT_COMMAND_REPOSITORY_IS_NULL);
         }
 
         this.logger = lgr;

@@ -21,6 +21,8 @@ public final class DepartmentCommandRestController {
 
     public static final String ERROR_MSG_LOGGER_IS_NULL = "Logger is null";
 
+    public static final String ERROR_MSG_I_DEPARTMENT_COMMAND_MANAGER_IS_NULL = "IDepartmentCommandManager is null";
+
     private final Logger logger;
 
     private final IDepartmentCommandManager deptCommandManager;
@@ -37,7 +39,7 @@ public final class DepartmentCommandRestController {
         }
 
         if (null == deptCommandManager) {
-            throw new IllegalArgumentException("IDepartmentCommandManager is null");
+            throw new IllegalArgumentException(ERROR_MSG_I_DEPARTMENT_COMMAND_MANAGER_IS_NULL);
         }
 
         this.logger = lgr;
