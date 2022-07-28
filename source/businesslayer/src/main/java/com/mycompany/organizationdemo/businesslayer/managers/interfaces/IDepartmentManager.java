@@ -9,6 +9,8 @@ import java.util.Set;
 
 public interface IDepartmentManager {
 
+    long getAllCount();
+
     Collection<DepartmentDto> getAll();
 
     Collection<DepartmentDto> getAllNoEmployees();

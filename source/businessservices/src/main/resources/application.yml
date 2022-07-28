@@ -1,7 +1,7 @@
 spring:
   batch:
-    # see https://docs.spring.io/spring-boot/docs/2.1.x/reference/html/howto-database-initialization.html for the many options of db initialization
-    initialize-schema: always
+    jdbc:
+      initialize-schema: embedded
   jpa:
     generate-ddl: true
     show-sql: true
@@ -11,14 +11,12 @@ spring:
       hibernate:
         format_sql: true
         #comingSoon create environment variable for this "dialect" option
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: ${SPRING_DATASOURCE_DIALECT}
         #dialect: org.hibernate.dialect.SQLServerDialect
         naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
     open-in-view: true
   datasource:
-    # below is needed for data.sql seed-data for ms-sql-server
-    initialization-mode: always
-
+    # below is needed for import.sql seed-data for ms-sql-server
     #SPRING_DATASOURCE_URL environment variable will be something like
     #-> jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;LOCK_MODE=0
     # OR
@@ -28,6 +26,9 @@ spring:
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driverClassName: ${SPRING_DATASOURCE_DRIVER-CLASS-NAME}
+  sql:
+    init:
+      mode: embedded
 
 logging:
   level:

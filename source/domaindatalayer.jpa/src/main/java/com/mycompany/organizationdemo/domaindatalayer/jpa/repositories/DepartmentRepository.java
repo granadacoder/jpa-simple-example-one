@@ -31,6 +31,8 @@ import java.util.Set;
 
 public final class DepartmentRepository implements IDepartmentRepository {
 
+    public static final int PAGE_SIZE_TEN = 10;
+
     private final Logger logger;
 
     private final IDepartmentEntityDtoConverter deptConverter;
@@ -83,6 +85,12 @@ public final class DepartmentRepository implements IDepartmentRepository {
     }
 
     @Override
+    public long getTheAllCount() {
+        long returnValue = this.internalDepartmentJpaRepository.count();
+        return returnValue;
+    }
+
+    @Override
     public Collection<DepartmentDto> findEmAll() {
         List<DepartmentJpaEntity> entities = this.internalDepartmentJpaRepository.findAll();
         /* right here, desperately hoping for each DepartmentJpaEntity in the "entities" to NOT have employees hydrated */
@@ -92,7 +100,7 @@ public final class DepartmentRepository implements IDepartmentRepository {
 
     @Override
     public Collection<DepartmentDto> findEmAllByMyCoolProjectionExample() {
-        Pageable topTen = PageRequest.of(0, 25);
+        Pageable topTen = PageRequest.of(0, PAGE_SIZE_TEN);
         List<DepartmentLiteProjection> projections = this.internalDepartmentJpaRepository.findAllProjectedBy(/*DepartmentLiteProjection.class, */topTen);
 
         /* change to use IDepartmentEntityDtoConverter , but hand map for now */

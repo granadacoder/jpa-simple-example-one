@@ -135,3 +135,18 @@ and NotFound negative requests
     GET
     http://localhost:8080/v1/departments/name/DoesNotExist
 
+
+
+
+
+Custom Task for reporting Dependency Chain
+
+All projects
+  
+    ./gradlew printAllDependencies
+
+  Single project example:
+  
+    ./gradlew :source:domaindatalayer.jpa:printAllDependencies
+        
+        

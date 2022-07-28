@@ -1,3 +1,6 @@
+SELECT 'AbcDef' as Marker, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES;
+SHOW TABLES;
+
 INSERT INTO DepartmentTable (DepartmentKey, DepartmentName, CreateOffsetDateTime) VALUES (111, 'DepartmentOne', '2001-01-31');
 INSERT INTO DepartmentTable (DepartmentKey, DepartmentName, CreateOffsetDateTime) VALUES (222, 'DepartmentTwo','2002-02-28');
 INSERT INTO DepartmentTable (DepartmentKey, DepartmentName, CreateOffsetDateTime) VALUES (333, 'DepartmentThree', CURRENT_TIMESTAMP);
@@ -14,3 +17,7 @@ INSERT INTO EmployeeTable (EmployeeKey, DepartmentForeignKey, Ssn, LastName, Fir
 INSERT INTO EmployeeTable (EmployeeKey, DepartmentForeignKey, Ssn, LastName, FirstName, CreateOffsetDateTime) VALUES (3331, 333, '000-00-3331', 'Jones', 'Cindy', CURRENT_TIMESTAMP);
 INSERT INTO EmployeeTable (EmployeeKey, DepartmentForeignKey, Ssn, LastName, FirstName, CreateOffsetDateTime) VALUES (3332, 333, '000-00-3332', 'Jones', 'Mindy', CURRENT_TIMESTAMP);
 INSERT INTO EmployeeTable (EmployeeKey, DepartmentForeignKey, Ssn, LastName, FirstName, CreateOffsetDateTime) VALUES (3333, 333, '000-00-3333', 'Jones', 'Lenny', CURRENT_TIMESTAMP);
+
+
+SELECT * FROM DepartmentTable;
+SELECT * FROM EmployeeTable;

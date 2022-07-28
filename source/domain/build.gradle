@@ -2,13 +2,11 @@ plugins {
     id 'java'
 }
 
-group 'com.mycompany.organizationdemo'
 
-sourceCompatibility = 1.8
 
-repositories {
-    mavenCentral()
-}
+
+
+
 
 dependencies {
     /* https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api

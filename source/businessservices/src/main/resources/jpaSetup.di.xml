@@ -32,6 +32,7 @@
             <property name="username" value="${SPRING_DATASOURCE_USERNAME}"/>
             <property name="password" value="${SPRING_DATASOURCE_PASSWORD}"/>
             <property name="driverClassName" value="${SPRING_DATASOURCE_DRIVER-CLASS-NAME}"/>
+            <!-- dialect is in application.yml -->
         </bean>
 
 

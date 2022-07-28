@@ -38,6 +38,12 @@ public final class DepartmentManager implements IDepartmentManager {
     }
 
     @Override
+    public long getAllCount() {
+        long returnValue = this.deptRepo.getTheAllCount();
+        return returnValue;
+    }
+
+    @Override
     public Collection<DepartmentDto> getAll() {
         /* use .findEmAll() or .findEmAllByMyCoolProjectionExample() here */
         Collection<DepartmentDto> returnItems = this.deptRepo.findEmAllByMyCoolProjectionExample();

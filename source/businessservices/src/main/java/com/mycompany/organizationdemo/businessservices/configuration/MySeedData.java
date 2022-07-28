@@ -1,15 +1,13 @@
 package com.mycompany.organizationdemo.businessservices.configuration;
 
 import com.mycompany.organizationdemo.businesslayer.managers.interfaces.IDepartmentManager;
-import com.mycompany.organizationdemo.domaindatalayer.jpa.entities.DepartmentJpaEntity;
+import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-@Component
 public final class MySeedData { //implements ApplicationRunner {
 
     private final Logger logger;
@@ -44,12 +42,17 @@ public final class MySeedData { //implements ApplicationRunner {
             throw new IllegalArgumentException("IDepartmentManager is null in 'run'");
         }
 
-        DepartmentJpaEntity deptOne = new DepartmentJpaEntity();
-        deptOne.setDepartmentName("DepartmentNineNineNine");
+        long currentDeptCount = this.deptManager.getAllCount();
 
-        this.logger.warn("saveSingle not working, even thought DI looks correct ????.");
+        long deptKey = Long.MAX_VALUE - currentDeptCount;
 
-        ////this.deptManager.saveSingle(deptOne);
-        ////this.deptManager.save(new DepartmentJpaEntity() {{setDepartmentName("DepartmentTwo"); }});
+        DepartmentDto deptNineNineNine = new DepartmentDto();
+        deptNineNineNine.setDepartmentName("DepartmentViaSeedData" + Long.toString(deptKey));
+        deptNineNineNine.setDepartmentKey(deptKey);
+
+        DepartmentDto saveResult = this.deptManager.saveSingle(deptNineNineNine);
+        //this.deptManager.save(new DepartmentJpaEntity() {{setDepartmentName("DepartmentTwo"); }});
+
+        this.logger.info(String.format("SeedData SaveSingle Result.  (DepartmentKey=\"%1$s\", DepartmentName=\"%2$s\")", saveResult.getDepartmentKey(), saveResult.getDepartmentName()));
     }
 }

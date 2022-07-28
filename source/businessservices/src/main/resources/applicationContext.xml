@@ -11,25 +11,25 @@
     <bean id="modelMapperBean" class="org.modelmapper.ModelMapper">
     </bean>
 
-    <bean id="departmentEntityDtoConverterBean"
+    <bean id="xmlDepartmentEntityDtoConverterBean"
           class="com.mycompany.organizationdemo.domaindatalayer.jpa.converters.DepartmentEntityDtoConverter">
         <constructor-arg ref="modelMapperBean"/>
     </bean>
 
-    <bean id="departmentRepositoryBean"
+    <bean id="xmlDepartmentRepositoryBean"
           class="com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentRepository">
-        <constructor-arg ref="departmentEntityDtoConverterBean"/>
+        <constructor-arg ref="xmlDepartmentEntityDtoConverterBean"/>
         <!-- note, the below is the first.letter.lower.case of the classname "com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.DepartmentRepository spring-di voodoo -->
         <constructor-arg ref="internalDepartmentJpaRepository"/>
     </bean>
 
 
-    <bean id="departmentManagerBean" class="com.mycompany.organizationdemo.businesslayer.managers.DepartmentManager">
-        <constructor-arg ref="departmentRepositoryBean"/>
+    <bean id="xmlDepartmentManagerBean" class="com.mycompany.organizationdemo.businesslayer.managers.DepartmentManager">
+        <constructor-arg ref="xmlDepartmentRepositoryBean"/>
     </bean>
 
-    <bean id="seedDataBean" class="com.mycompany.organizationdemo.businessservices.configuration.MySeedData">
-        <constructor-arg ref="departmentManagerBean"/>
+    <bean id="xmlSeedDataBean" class="com.mycompany.organizationdemo.businessservices.configuration.MySeedData">
+        <constructor-arg ref="xmlDepartmentManagerBean"/>
     </bean>
 
 </beans>

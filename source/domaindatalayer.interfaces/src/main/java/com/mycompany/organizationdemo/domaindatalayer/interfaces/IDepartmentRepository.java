@@ -9,6 +9,8 @@ import java.util.Set;
 
 public interface IDepartmentRepository {
 
+  long getTheAllCount();
+
   Collection<DepartmentDto> findEmAll();
 
   Collection<DepartmentDto> findEmAllByMyCoolProjectionExample();

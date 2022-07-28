@@ -1,21 +1,21 @@
 buildscript {
 
     ext {
-        spring_plugin_version = '2.2.6.RELEASE'
-        springBootVersion = '2.2.6.RELEASE'
+        spring_plugin_version = '2.7.0'
+        springBootVersion = '2.7.0'
         
         
-        slf4jVersion = "1.7.25"
-        logbackClassicVersion = '1.2.3'
+        slf4jVersion = "1.7.36"
+        logbackClassicVersion = '1.2.11'
         
         
         javaxInjectVersion = "1"
         javaxPersistenceApiVersion = "2.2"
-        junitVersion = "4.12"
+        junitVersion = "4.13.2"
         mockitoVersion = "3.3.0"
         jacksonAnnotationsVersion = "2.11.0"
-        modelMapperVersion = "2.3.7"
-        commonsLangVersion = '3.7'
+        modelMapperVersion = "3.1.0"
+        commonsLangVersion = '3.12.0'
     }
 
     repositories {
@@ -34,13 +34,26 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 springBoot {
-    mainClassName = 'com.mycompany.organizationdemo.businessservices.MyRestServiceStartupApplication'
+    mainClass = 'com.mycompany.organizationdemo.businessservices.MyRestServiceStartupApplicationEntry'
 }
 
-group 'com.mycompany.organizationdemo'
+
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+subprojects {
+
+    repositories {
+        mavenCentral()
+    }
+
+}
+
+allprojects {
+
+    /* custom task to show dependencies.  run "gradle printAllDependencies" from commandline.  see https://stackoverflow.com/questions/44266687/how-to-print-out-all-dependencies-in-a-gradle-multi-project-build/54436979#54436979 */
+    task printAllDependencies(type: DependencyReportTask) {}
+
+}
 
 repositories {
     mavenCentral()
