@@ -9,19 +9,19 @@ import java.util.Set;
 
 public interface IDepartmentQueryRepository {
 
-  long getTheAllCount();
+    long getTheAllCount();
 
-  Collection<DepartmentDto> findEmAll();
+    Collection<DepartmentDto> findEmAll();
 
-  Collection<DepartmentDto> findEmAllByMyCoolProjectionExample();
+    Collection<DepartmentDto> findEmAllByMyCoolProjectionExample();
 
-  Optional<DepartmentDto> findById(long key);
+    Optional<DepartmentDto> findById(long key);
 
-  Optional<DepartmentDto> findByDepartmentName(String departmentName);
+    Optional<DepartmentDto> findByDepartmentName(String departmentName);
 
-  Collection<DepartmentDto> findByCreateOffsetDateTimeBefore(OffsetDateTime zdt);
+    Collection<DepartmentDto> findByCreateOffsetDateTimeBefore(OffsetDateTime zdt);
 
-  Collection<DepartmentDto> findBySurrogateKeyIn(Set<Long> departmentKeys);
+    Collection<DepartmentDto> findBySurrogateKeyIn(Set<Long> departmentKeys);
 
-  Collection<DepartmentDto> findOrphanedDepartments();
+    Collection<DepartmentDto> findOrphanedDepartments();
 }

@@ -6,9 +6,9 @@ import javax.persistence.metamodel.SingularAttribute;
 
 @SuppressWarnings({"checkstyle:typename", "checkstyle:visibilitymodifier"}) /* Metamodel's violate normal naming rules :( */
 public class EmployeeJpaEntity_ {
-  public static volatile SingularAttribute<EmployeeJpaEntity, Long> employeeKey;
+    public static volatile SingularAttribute<EmployeeJpaEntity, Long> employeeKey;
 
-  public static volatile SingularAttribute<EmployeeJpaEntity, DepartmentJpaEntity> parentDepartmentJpaEntity;
+    public static volatile SingularAttribute<EmployeeJpaEntity, DepartmentJpaEntity> parentDepartmentJpaEntity;
 
-  public static volatile SingularAttribute<EmployeeJpaEntity, Long> parentDepartmentJpaEntityDepartmentKey;
+    public static volatile SingularAttribute<EmployeeJpaEntity, Long> parentDepartmentJpaEntityDepartmentKey;
 }

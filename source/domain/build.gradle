@@ -3,11 +3,6 @@ plugins {
 }
 
 
-
-
-
-
-
 dependencies {
     /* https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
     * #vsnote Unfortunately, it does not seem JPA has "fluent" mappings like EF.Core or NHibernate.  If you look at the Department.java (pojo) it is riddled with JPA annotations

@@ -24,7 +24,8 @@
     </bean>
 
 
-    <bean id="xmlDepartmentQueryManagerBean" class="com.mycompany.organizationdemo.businesslayer.managers.queries.DepartmentQueryManager">
+    <bean id="xmlDepartmentQueryManagerBean"
+          class="com.mycompany.organizationdemo.businesslayer.managers.queries.DepartmentQueryManager">
         <constructor-arg ref="xmlDepartmentQueryRepositoryBean"/>
     </bean>
 
@@ -36,12 +37,14 @@
     </bean>
 
 
-    <bean id="xmlDepartmentCommandManagerBean" class="com.mycompany.organizationdemo.businesslayer.managers.commands.DepartmentCommandManager">
+    <bean id="xmlDepartmentCommandManagerBean"
+          class="com.mycompany.organizationdemo.businesslayer.managers.commands.DepartmentCommandManager">
         <constructor-arg ref="xmlDepartmentCommandRepositoryBean"/>
     </bean>
 
 
-    <bean id="xmlSeedDataBean" class="com.mycompany.organizationdemo.businessservices.configuration.seeddata.MySeedData">
+    <bean id="xmlSeedDataBean"
+          class="com.mycompany.organizationdemo.businessservices.configuration.seeddata.MySeedData">
         <constructor-arg ref="xmlDepartmentQueryManagerBean"/>
         <constructor-arg ref="xmlDepartmentCommandManagerBean"/>
     </bean>
