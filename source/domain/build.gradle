@@ -4,11 +4,5 @@ plugins {
 
 
 dependencies {
-    /* https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
-    * #vsnote Unfortunately, it does not seem JPA has "fluent" mappings like EF.Core or NHibernate.  If you look at the Department.java (pojo) it is riddled with JPA annotations
-    * this is why this below dependency has to be in this module (aka, csproj)...thus the .Domain pojo library cannot be as clean/simple as possible
-    * */
-    compile group: 'javax.persistence', name: 'javax.persistence-api', version: "${javaxPersistenceApiVersion}"
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonAnnotationsVersion}"
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: "${commonsLangVersion}"
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonAnnotationsVersion}"
 }

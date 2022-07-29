@@ -237,4 +237,11 @@ All projects
   
     ./gradlew :source:domaindatalayer.jpa:printAllDependencies
         
-        
+####Launch from Gradle Command Line
+
+    ./gradlew clean build
+
+JPA-ONLY
+
+    ./gradlew :source:businessservices:bootRun  --args='--SPRING_DATASOURCE_URL=jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;LOCK_MODE=0 --SPRING_DATASOURCE_USERNAME=myUserName --SPRING_DATASOURCE_PASSWORD= --SPRING_DATASOURCE_DRIVER-CLASS-NAME=org.h2.Driver --SPRING_DATASOURCE_DIALECT=org.hibernate.dialect.H2Dialect --CACHE_ASIDE_DISAMBIGUATE_VALUE=LocalDeveloperCacheAsideDisambiguate123'
+    
