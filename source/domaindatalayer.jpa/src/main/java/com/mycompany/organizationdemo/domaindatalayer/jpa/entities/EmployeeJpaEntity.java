@@ -1,5 +1,6 @@
 package com.mycompany.organizationdemo.domaindatalayer.jpa.entities;
 
+import com.mycompany.organizationdemo.domaindatalayer.interfaces.constants.stringlengths.EmployeeValidationStringLengthConstants;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.constants.OrmConstants;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -33,13 +34,13 @@ public class EmployeeJpaEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long employeeKey;
 
-    @Column(name = "Ssn")
+    @Column(name = "Ssn", length = EmployeeValidationStringLengthConstants.EMPLOYEE_SSN_MAX_LENGTH)
     private String ssn;
 
-    @Column(name = "LastName")
+    @Column(name = "LastName", length = EmployeeValidationStringLengthConstants.EMPLOYEE_LAST_NAME_MAX_LENGTH)
     private String lastName;
 
-    @Column(name = "FirstName")
+    @Column(name = "FirstName", length = EmployeeValidationStringLengthConstants.EMPLOYEE_FIRST_NAME_MAX_LENGTH)
     private String firstName;
 
     @Column(name = "CreateOffsetDateTime", columnDefinition = OrmConstants.OFFSET_DATE_TIME_COLUMN_DEFINITION)

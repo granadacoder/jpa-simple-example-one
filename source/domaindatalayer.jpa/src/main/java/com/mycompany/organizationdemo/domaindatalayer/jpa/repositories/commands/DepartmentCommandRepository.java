@@ -1,7 +1,7 @@
 package com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.commands;
 
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
-import com.mycompany.organizationdemo.domaindatalayer.interfaces.IDepartmentCommandRepository;
+import com.mycompany.organizationdemo.domaindatalayer.interfaces.commands.IDepartmentCommandRepository;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.converters.interfaces.IDepartmentEntityDtoConverter;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.entities.DepartmentJpaEntity;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.internal.InternalDepartmentJpaRepository;
@@ -81,7 +81,7 @@ public final class DepartmentCommandRepository implements IDepartmentCommandRepo
     }
 
     @Override
-    public int deleteByKey(long departmentKey) {
+    public long deleteByKey(long departmentKey) {
         int returnValue = this.internalDepartmentJpaRepository.deleteDepartmentByDepartmentKey(departmentKey);
         return returnValue;
     }

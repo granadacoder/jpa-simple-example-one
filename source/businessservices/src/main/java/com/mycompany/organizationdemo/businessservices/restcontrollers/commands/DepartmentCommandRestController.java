@@ -23,6 +23,10 @@ public final class DepartmentCommandRestController {
 
     public static final String ERROR_MSG_I_DEPARTMENT_COMMAND_MANAGER_IS_NULL = "IDepartmentCommandManager is null";
 
+    public static final String LOG_MSG_METHOD_DELETE_DEPARTMENT_CALLED = "Method deleteDepartment called. (deptKey=\"%1$s\")";
+
+    public static final String LOG_MSG_METHOD_CREATE_DEPARTMENT_CALLED = "Method createDepartment called. (inputItem=\"%1$s\")";
+
     private final Logger logger;
 
     private final IDepartmentCommandManager deptCommandManager;
@@ -47,23 +51,18 @@ public final class DepartmentCommandRestController {
     }
 
     @RequestMapping(value = "departments/{deptKey}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> deleteUser(@PathVariable("deptKey") Long deptKey) {
-        this.logger.info(String.format("Method deleteUser called. (deptKey=\"%1s\")", deptKey));
+    public ResponseEntity<Long> deleteDepartment(@PathVariable("deptKey") Long deptKey) {
+        this.logger.info(String.format(LOG_MSG_METHOD_DELETE_DEPARTMENT_CALLED, deptKey));
 
-        int rowCount = this.deptCommandManager.deleteByKey(deptKey);
-        ResponseEntity<Integer> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        if (rowCount > 0) {
-            responseEntity = new ResponseEntity<>(rowCount, HttpStatus.OK);
-        }
-
+        long rowCount = this.deptCommandManager.deleteByKey(deptKey);
+        ResponseEntity<Long> responseEntity = new ResponseEntity<>(rowCount, HttpStatus.OK);
         return responseEntity;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "departments/department", produces = {"application/json"}, consumes = {"application/json"})
     ResponseEntity<DepartmentDto> createDepartment(@RequestBody DepartmentDto inputItem) {
 
-        this.logger.info(String.format("Method createDepartment called. (inputItem=\"%1s\")", inputItem));
+        this.logger.info(String.format(LOG_MSG_METHOD_CREATE_DEPARTMENT_CALLED, inputItem));
 
         DepartmentDto foundItem = this.deptCommandManager.saveSingle(inputItem);
         ResponseEntity<DepartmentDto> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);

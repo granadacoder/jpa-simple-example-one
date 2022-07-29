@@ -6,5 +6,5 @@ public interface IDepartmentCommandManager {
 
     DepartmentDto saveSingle(DepartmentDto item);
 
-    int deleteByKey(long key);
+    long deleteByKey(long key);
 }

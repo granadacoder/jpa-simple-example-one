@@ -21,6 +21,10 @@ public final class MySeedData { //implements ApplicationRunner {
 
     public static final String ERROR_MSG_IDEPARTMENT_COMMAND_MANAGER_IS_NULL_IN_LOAD_DATA = "IDepartmentCommandManager is null in 'loadData'";
 
+    public static final int SEED_DATA_DEPARTMENT_INSERT_COUNT = 10;
+
+    public static final String LOG_MSG_SEED_DATA_SAVE_SINGLE_RESULT = "SeedData SaveSingle Result.  (DepartmentKey=\"%1$s\", DepartmentName=\"%2$s\")";
+
     private final Logger logger;
 
     private final IDepartmentQueryManager deptQueryManager;
@@ -66,15 +70,20 @@ public final class MySeedData { //implements ApplicationRunner {
 
         long currentDeptCount = this.deptQueryManager.getAllCount();
 
-        long deptKey = Long.MAX_VALUE - currentDeptCount;
+        long firstAvailableKey = Long.MAX_VALUE - currentDeptCount;
 
-        DepartmentDto deptNineNineNine = new DepartmentDto();
-        deptNineNineNine.setDepartmentName("DepartmentViaSeedData" + Long.toString(deptKey));
-        deptNineNineNine.setDepartmentKey(deptKey);
+        for (long i = 0; i < SEED_DATA_DEPARTMENT_INSERT_COUNT; i++) {
 
-        DepartmentDto saveResult = this.deptCommandManager.saveSingle(deptNineNineNine);
-        //this.deptQueryManager.save(new DepartmentJpaEntity() {{setDepartmentName("DepartmentTwo"); }});
+            long deptKey = firstAvailableKey - i;
+            DepartmentDto deptNineNineNine = new DepartmentDto();
+            deptNineNineNine.setDepartmentName("DepartmentViaSeedData" + Long.toString(deptKey));
+            /* below, jpa will ignore and use its own, cacheaside will use it */
+            deptNineNineNine.setDepartmentKey(deptKey);
 
-        this.logger.info(String.format("SeedData SaveSingle Result.  (DepartmentKey=\"%1$s\", DepartmentName=\"%2$s\")", saveResult.getDepartmentKey(), saveResult.getDepartmentName()));
+            DepartmentDto saveResult = this.deptCommandManager.saveSingle(deptNineNineNine);
+            //this.deptQueryManager.save(new DepartmentJpaEntity() {{setDepartmentName("DepartmentTwo"); }});
+
+            this.logger.info(String.format(LOG_MSG_SEED_DATA_SAVE_SINGLE_RESULT, saveResult.getDepartmentKey(), saveResult.getDepartmentName()));
+        }
     }
 }

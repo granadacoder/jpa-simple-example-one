@@ -1,7 +1,7 @@
 package com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.queries;
 
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
-import com.mycompany.organizationdemo.domaindatalayer.interfaces.IDepartmentQueryRepository;
+import com.mycompany.organizationdemo.domaindatalayer.interfaces.queries.IDepartmentQueryRepository;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.converters.interfaces.IDepartmentEntityDtoConverter;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.entities.DepartmentJpaEntity;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.entities.DepartmentJpaEntity_;

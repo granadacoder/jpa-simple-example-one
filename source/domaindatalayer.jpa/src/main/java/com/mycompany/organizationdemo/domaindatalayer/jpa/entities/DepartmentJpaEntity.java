@@ -1,5 +1,6 @@
 package com.mycompany.organizationdemo.domaindatalayer.jpa.entities;
 
+import com.mycompany.organizationdemo.domaindatalayer.interfaces.constants.stringlengths.DepartmentValidationStringLengthConstants;
 import com.mycompany.organizationdemo.domaindatalayer.jpa.constants.OrmConstants;
 
 import javax.persistence.CascadeType;
@@ -37,7 +38,7 @@ public class DepartmentJpaEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long departmentKey;
 
-    @Column(name = "DepartmentName", unique = true)
+    @Column(name = "DepartmentName", unique = true, length = DepartmentValidationStringLengthConstants.DEPARTMENT_NAME_MAX_LENGTH)
     private String departmentName;
 
     @Column(name = "CreateOffsetDateTime", columnDefinition = OrmConstants.OFFSET_DATE_TIME_COLUMN_DEFINITION)
