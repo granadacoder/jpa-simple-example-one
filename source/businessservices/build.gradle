@@ -29,6 +29,7 @@ dependencies {
     /* #vsnote below is like a "project reference" in csproj */
     implementation project(':source:businesslayer')
     implementation project(':source:domain')
+    implementation project(':source:exceptions')
     implementation project(':source:domaindatalayer.interfaces')
     implementation project(':source:domaindatalayer.jpa')
 

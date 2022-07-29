@@ -1,6 +1,21 @@
 
-    Startup Class:
-    com.mycompany.organizationdemo.businessservices.MyRestServiceStartupApplication
+###Spring Rest "StarterKit" with proper software layers (gradle modules)
+
+    include ':source:businessservices'
+    include ':source:businesslayer'
+
+    include ':source:domaindatalayer.interfaces'
+
+    include ':source:domaindatalayer.jpa'
+
+
+    include ':source:domain'
+    include ':source:exceptions'
+
+
+####Startup Class:
+
+    com.mycompany.organizationdemo.businessservices.BusinessServicesStartupApplicationEntry
 
 Environment Variables (need to set them under Run/Configurations)
 
@@ -144,10 +159,75 @@ and NotFound negative requests
     http://localhost:8080/v1/departments/name/DoesNotExist
 
 
+###How to make "your" project.
+
+Get the code of this repo.
+Delete the .git hidden folder.
+(You will NOT use this repo)
+
+..
+
+Find all instances of paths and filenames and code-content of
+
+    "mycompany"
+
+and replace with
+
+    "optum.myteam"
+    
+  
+ for example
+ 
+ 
+ "acme.drinks"
+
+..
+
+Find all instances of paths and filenames and code-content of
+
+    "organizationdemo"
+
+and replace with
+
+    "myapplication"
+
+for example
+
+    "sodaapi"
+    
+    
+Find all instances (case sensitive) of paths and filenames and code-content of
+
+    "Department", "DEPARTMENT", "dept"
+
+and replace with your "first object" (that is a 1:N parent of something)
+
+    "Patient", "PATIENT", "pat" for example.
+        
+..
+
+Find all instances (case sensitive) of paths and filenames and code-content of
+
+    "Employee", "EMPLOYEE", "emp"
+
+and replace with your "second object" (that is a 1:N child of something)
+
+    "Medication", "MEDICATION", "med" for example.    
 
 
+..
 
-Custom Task for reporting Dependency Chain
+Do a sanity check on the code.  
+
+This is a "starter kit", but with a few string replacements, you can tweak it to "your project"
+
+
+Check the code into your (presumably new) repo.
+
+
+....
+
+####Custom Task for reporting Dependency Chain
 
 All projects
   

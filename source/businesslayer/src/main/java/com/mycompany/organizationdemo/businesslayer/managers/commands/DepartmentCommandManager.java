@@ -1,8 +1,11 @@
 package com.mycompany.organizationdemo.businesslayer.managers.commands;
 
+import com.mycompany.organizationdemo.businesslayer.constants.BusinessLogicToHttpTensionConstants;
 import com.mycompany.organizationdemo.businesslayer.managers.commands.interfaces.IDepartmentCommandManager;
+import com.mycompany.organizationdemo.businesslayer.validators.DepartmentValidator;
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
-import com.mycompany.organizationdemo.domaindatalayer.interfaces.IDepartmentCommandRepository;
+import com.mycompany.organizationdemo.domaindatalayer.interfaces.commands.IDepartmentCommandRepository;
+import com.mycompany.organizationdemo.exceptions.BusinessLayerFinalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +16,12 @@ public final class DepartmentCommandManager implements IDepartmentCommandManager
     public static final String ERROR_MSG_LOGGER_IS_NULL = "Logger is null";
 
     public static final String ERROR_MSG_I_DEPARTMENT_COMMAND_REPOSITORY_IS_NULL = "IDepartmentCommandRepository is null";
+
+    public static final String ERROR_MSG_DEPARTMENT_INPUT_IS_INVALID = "Department input is invalid.";
+
+    public static final String ERROR_MSG_DEPARTMENT_DOES_NOT_EXIST = "Department does not exist. (DepartmentKey=\"%1$s\")";
+
+    public static final String LOG_MSG_METHOD_DELETE_BY_KEY_CALLED_DEPT_NAME = "Method deleteByKey called. (deptName=\"%1$s\")";
 
     private final Logger logger;
 
@@ -39,14 +48,22 @@ public final class DepartmentCommandManager implements IDepartmentCommandManager
 
     @Override
     public DepartmentDto saveSingle(DepartmentDto item) {
+        try {
+            new DepartmentValidator().validateSingle(item);
+        } catch (IllegalArgumentException illex) {
+            throw new BusinessLayerFinalException(illex.getMessage(), BusinessLogicToHttpTensionConstants.HTTP_STATUS_400_BAD_REQUEST, true, ERROR_MSG_DEPARTMENT_INPUT_IS_INVALID);
+        }
         DepartmentDto returnItem = this.deptCommandRepo.save(item);
         return returnItem;
     }
 
     @Override
-    public int deleteByKey(long key) {
-        this.logger.info(String.format("Method deleteByKey called. (deptName=\"%1s\")", key));
-        int returnValue = this.deptCommandRepo.deleteByKey(key);
+    public long deleteByKey(long key) {
+        this.logger.info(String.format(LOG_MSG_METHOD_DELETE_BY_KEY_CALLED_DEPT_NAME, key));
+        long returnValue = this.deptCommandRepo.deleteByKey(key);
+        if (returnValue == 0) {
+            throw new BusinessLayerFinalException("", BusinessLogicToHttpTensionConstants.HTTP_STATUS_404_NOT_FOUND, false, String.format(ERROR_MSG_DEPARTMENT_DOES_NOT_EXIST, key));
+        }
         return returnValue;
     }
 }

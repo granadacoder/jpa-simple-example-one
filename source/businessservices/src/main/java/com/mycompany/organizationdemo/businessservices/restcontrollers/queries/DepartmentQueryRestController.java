@@ -25,6 +25,14 @@ public final class DepartmentQueryRestController {
 
     public static final String ERROR_MSG_LOGGER_IS_NULL = "Logger is null";
 
+    public static final String LOG_MSG_METHOD_GET_ALL_DEPARTMENTS_BY_BEFORE_CREATE_DATE_CALLED = "Method getAllDepartmentsByBeforeCreateDate called. (zdt=\"%1$s\")";
+
+    public static final String LOG_MSG_METHOD_GET_DEPARTMENT_BY_KEYS_CALLED = "Method getDepartmentByKeys called. (deptKey=\"%1$s\")";
+
+    public static final String LOG_MSG_METHOD_GET_DEPARTMENT_BY_ID_CALLED = "Method getDepartmentById called. (deptKey=\"%1$s\")";
+
+    public static final String LOG_MSG_METHOD_GET_DEPARTMENT_BY_NAME_CALLED = "Method getDepartmentByName called. (deptName=\"%1$s\")";
+
     private final Logger logger;
 
     private final IDepartmentQueryManager deptQueryManager;
@@ -71,7 +79,7 @@ public final class DepartmentQueryRestController {
 
     @RequestMapping(value = "/departments/beforecreatedate/{zdt}", method = RequestMethod.GET)
     Collection<DepartmentDto> getAllDepartmentsByBeforeCreateDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime zdt) {
-        this.logger.info(String.format("Method getAllDepartmentsByBeforeCreateDate called. (zdt=\"%1s\")", zdt));
+        this.logger.info(String.format(LOG_MSG_METHOD_GET_ALL_DEPARTMENTS_BY_BEFORE_CREATE_DATE_CALLED, zdt));
         Collection<DepartmentDto> returnItems = this.deptQueryManager.getDepartmentsOlderThanDate(zdt);
         return returnItems;
     }
@@ -79,7 +87,7 @@ public final class DepartmentQueryRestController {
     @RequestMapping(value = "/departments/bykeys/{deptKeys}", method = RequestMethod.GET)
     Collection<DepartmentDto> getDepartmentByKeys(@PathVariable Set<Long> deptKeys) {
 
-        this.logger.info(String.format("Method getDepartmentByKeys called. (deptKey=\"%1s\")", deptKeys));
+        this.logger.info(String.format(LOG_MSG_METHOD_GET_DEPARTMENT_BY_KEYS_CALLED, deptKeys));
         Collection<DepartmentDto> returnItems = this.deptQueryManager.getByKeys(deptKeys);
         return returnItems;
     }
@@ -87,7 +95,7 @@ public final class DepartmentQueryRestController {
     @RequestMapping(method = RequestMethod.GET, value = "departments/{deptKey}")
     ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable Long deptKey) {
 
-        this.logger.info(String.format("Method getDepartmentById called. (deptKey=\"%1s\")", deptKey));
+        this.logger.info(String.format(LOG_MSG_METHOD_GET_DEPARTMENT_BY_ID_CALLED, deptKey));
 
         Optional<DepartmentDto> foundItem = this.deptQueryManager.getSingle(deptKey);
         ResponseEntity<DepartmentDto> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -102,7 +110,7 @@ public final class DepartmentQueryRestController {
     @RequestMapping(method = RequestMethod.GET, value = "departments/name/{deptName}")
     ResponseEntity<DepartmentDto> getDepartmentByName(@PathVariable String deptName) {
 
-        this.logger.info(String.format("Method getDepartmentByName called. (deptName=\"%1s\")", deptName));
+        this.logger.info(String.format(LOG_MSG_METHOD_GET_DEPARTMENT_BY_NAME_CALLED, deptName));
 
         Optional<DepartmentDto> foundItem = this.deptQueryManager.getSingleByName(deptName);
         ResponseEntity<DepartmentDto> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);

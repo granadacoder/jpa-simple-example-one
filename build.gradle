@@ -1,7 +1,7 @@
 buildscript {
 
     ext {
-        spring_plugin_version = '2.7.0'
+        springBootGradlePluginVersion = '2.7.0'
         springBootVersion = '2.7.0'
 
 
@@ -22,7 +22,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:$spring_plugin_version")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootGradlePluginVersion")
     }
 }
 
@@ -34,7 +34,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 springBoot {
-    mainClass = 'com.mycompany.organizationdemo.businessservices.MyRestServiceStartupApplicationEntry'
+    mainClass = 'com.mycompany.organizationdemo.businessservices.BusinessServicesStartupApplicationEntry'
 }
 
 
@@ -60,8 +60,8 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: "$junitVersion"
-    testCompile group: 'org.mockito', name: 'mockito-core', version: "${mockitoVersion}"
+    testImplementation(group: 'junit', name: 'junit', version: "$junitVersion")
+    testImplementation(group: 'org.mockito', name: 'mockito-core', version: "${mockitoVersion}")
 }
 
 

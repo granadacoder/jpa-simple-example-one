@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+
+<beans>
+
+        <import resource="jpaSetup.di.xml"/>
+
+        <jpa:repositories base-package="com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.internal"/>
+
+        <bean id="modelMapperBean" class="org.modelmapper.ModelMapper">
+        </bean>
+
+        <bean id="xmlDepartmentEntityDtoConverterBean"
+              class="com.mycompany.organizationdemo.domaindatalayer.jpa.converters.DepartmentEntityDtoConverter">
+            <constructor-arg ref="modelMapperBean"/>
+        </bean>
+
+        <bean id="xmlDepartmentQueryRepositoryBean"
+              class="com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.queries.DepartmentQueryRepository">
+            <constructor-arg ref="xmlDepartmentEntityDtoConverterBean"/>
+            <!-- note, the below is the first.letter.lower.case of the classname "com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.queries.DepartmentQueryRepository spring-di voodoo -->
+            <constructor-arg ref="internalDepartmentJpaRepository"/>
+        </bean>
+
+    <bean id="xmlDepartmentCommandRepositoryBean"
+          class="com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.commands.DepartmentCommandRepository">
+        <constructor-arg ref="xmlDepartmentEntityDtoConverterBean"/>
+        <!-- note, the below is the first.letter.lower.case of the classname "com.mycompany.organizationdemo.domaindatalayer.jpa.repositories.commands.DepartmentCommandRepository spring-di voodoo -->
+        <constructor-arg ref="internalDepartmentJpaRepository"/>
+    </bean>
+
+
+
+    </beans>
+
+</beans>

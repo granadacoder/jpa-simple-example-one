@@ -25,7 +25,7 @@ import java.util.Objects;
 //@ServletComponentScan
 @Configuration
 
-public class MyRestServiceStartupApplicationEntry {
+public class BusinessServicesStartupApplicationEntry {
 
     public static final String ERROR_MSG_APPLICATION_CONTEXT_XML_NOT_FOUND_THE_ENTRY_DEPENDENCY_INJECTION_FILE_MUST_BE_APPLICATION_CONTEXT_XML = "applicationContext.xml not found.  The entry dependency injection file must be applicationContext.xml";
 
@@ -41,12 +41,12 @@ public class MyRestServiceStartupApplicationEntry {
 
     public static final String RESOURCE_LOCATION_PATTERN = "classpath*:**/*.xml"; /* ? add *.yml ? */
 
-    private static Logger logger = LoggerFactory.getLogger(MyRestServiceStartupApplicationEntry.class);
+    private static Logger logger = LoggerFactory.getLogger(BusinessServicesStartupApplicationEntry.class);
 
     public static void main(final String[] args) {
         try {
 
-            URL resource = MyRestServiceStartupApplicationEntry.class.getResource(APPLICATION_CONTEXT_XML_RELATIVE_FILE_NAME);
+            URL resource = BusinessServicesStartupApplicationEntry.class.getResource(APPLICATION_CONTEXT_XML_RELATIVE_FILE_NAME);
             if (null == resource || StringUtils.isBlank(resource.getPath())) {
                 throw new FileNotFoundException(ERROR_MSG_APPLICATION_CONTEXT_XML_NOT_FOUND_THE_ENTRY_DEPENDENCY_INJECTION_FILE_MUST_BE_APPLICATION_CONTEXT_XML);
             }
@@ -54,7 +54,7 @@ public class MyRestServiceStartupApplicationEntry {
             //import org.springframework.boot.builder.SpringApplicationBuilder;
             //org.springframework.context.ConfigurableApplicationContext applicationContext = new SpringApplicationBuilder(ApplicationEntry.class).initializers(new CustomAppContextApplicationContextInitializer(args)).run(args);
 
-            org.springframework.context.ConfigurableApplicationContext applicationContext = SpringApplication.run(MyRestServiceStartupApplicationEntry.class, args);
+            org.springframework.context.ConfigurableApplicationContext applicationContext = SpringApplication.run(BusinessServicesStartupApplicationEntry.class, args);
 
             if (logger.isInfoEnabled()) {
                 Resource[] items = getXMLResources();
