@@ -8,6 +8,8 @@ import javax.persistence.metamodel.SingularAttribute;
 public class EmployeeJpaEntity_ {
     public static volatile SingularAttribute<EmployeeJpaEntity, Long> employeeKey;
 
+    public static volatile SingularAttribute<EmployeeJpaEntity, String> lastName;
+
     public static volatile SingularAttribute<EmployeeJpaEntity, DepartmentJpaEntity> parentDepartmentJpaEntity;
 
     public static volatile SingularAttribute<EmployeeJpaEntity, Long> parentDepartmentJpaEntityDepartmentKey;

@@ -2,7 +2,7 @@ package com.mycompany.organizationdemo.domaindatalayer.interfaces;
 
 import com.mycompany.organizationdemo.domain.dtos.DepartmentDto;
 
-public interface IDepartmentCommandRepository {
+public interface INotUsedDepartmentCommandRepository {
 
     DepartmentDto save(DepartmentDto item);
 

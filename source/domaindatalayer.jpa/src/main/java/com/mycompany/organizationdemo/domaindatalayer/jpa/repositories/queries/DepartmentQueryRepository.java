@@ -19,6 +19,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
@@ -200,6 +202,47 @@ public final class DepartmentQueryRepository implements IDepartmentQueryReposito
         //main query selection
         departmentQuery.select(departmentRoot)
                 .where(criteriaBuilder.not(criteriaBuilder.exists(employeeSubquery)));
+
+        TypedQuery<DepartmentJpaEntity> typedQuery = this.entityManager.createQuery(departmentQuery);
+        List<DepartmentJpaEntity> resultList = typedQuery.getResultList();
+
+        Collection<DepartmentDto> returnItems = this.deptConverter.convertToDtos(resultList);
+        return returnItems;
+    }
+
+    @Override
+    public Collection<DepartmentDto> findAnyDeepByEmployeeLastName(String empLastName) {
+
+        CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+
+        //main query
+        CriteriaQuery<DepartmentJpaEntity> departmentQuery = criteriaBuilder.createQuery(DepartmentJpaEntity.class);
+        Root<DepartmentJpaEntity> departmentRoot = departmentQuery.from(DepartmentJpaEntity.class);
+
+        Join<DepartmentJpaEntity, EmployeeJpaEntity> deptToEmpJoin = departmentRoot.join(DepartmentJpaEntity_.employeeJpaEntities);
+
+        ParameterExpression<String> peStringForLastName = criteriaBuilder.parameter(String.class);
+        departmentQuery.where(criteriaBuilder.like(deptToEmpJoin.get(EmployeeJpaEntity_.lastName), peStringForLastName));
+
+        TypedQuery<DepartmentJpaEntity> typedQuery = this.entityManager.createQuery(departmentQuery);
+        typedQuery.setParameter(peStringForLastName, empLastName);
+        List<DepartmentJpaEntity> resultList = typedQuery.getResultList();
+
+        Collection<DepartmentDto> returnItems = this.deptConverter.convertToDtos(resultList);
+        return returnItems;
+
+    }
+
+    @Override
+    public Collection<DepartmentDto> findEmAllDeep() {
+        CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+
+        //main query
+        CriteriaQuery<DepartmentJpaEntity> departmentQuery = criteriaBuilder.createQuery(DepartmentJpaEntity.class);
+        Root<DepartmentJpaEntity> departmentRoot = departmentQuery.from(DepartmentJpaEntity.class);
+
+        /* so while the result below is not currently used in this method, the below does do the proper JOIN */
+        Join<DepartmentJpaEntity, EmployeeJpaEntity> deptToEmpJoin = departmentRoot.join(DepartmentJpaEntity_.employeeJpaEntities);
 
         TypedQuery<DepartmentJpaEntity> typedQuery = this.entityManager.createQuery(departmentQuery);
         List<DepartmentJpaEntity> resultList = typedQuery.getResultList();

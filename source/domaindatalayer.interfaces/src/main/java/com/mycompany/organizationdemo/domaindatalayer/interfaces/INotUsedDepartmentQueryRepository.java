@@ -7,11 +7,13 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
-public interface IDepartmentQueryRepository {
+public interface INotUsedDepartmentQueryRepository {
 
     long getTheAllCount();
 
     Collection<DepartmentDto> findEmAll();
+
+    Collection<DepartmentDto> findEmAllDeep();
 
     Collection<DepartmentDto> findEmAllByMyCoolProjectionExample();
 

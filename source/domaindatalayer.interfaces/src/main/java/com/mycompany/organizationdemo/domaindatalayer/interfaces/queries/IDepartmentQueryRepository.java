@@ -13,6 +13,10 @@ public interface IDepartmentQueryRepository {
 
     Collection<DepartmentDto> findEmAll();
 
+    Collection<DepartmentDto> findEmAllDeep();
+
+    Collection<DepartmentDto> findAnyDeepByEmployeeLastName(String empLastName);
+
     Collection<DepartmentDto> findEmAllByMyCoolProjectionExample();
 
     Optional<DepartmentDto> findById(long key);
